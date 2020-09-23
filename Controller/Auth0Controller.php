@@ -46,7 +46,7 @@ class Auth0Controller extends AbstractController
      *
      * @Route("", name="auth0")
      */
-    public function index(Request $request, ClientRegistry $clientRegistry)
+    public function index(ClientRegistry $clientRegistry)
     {
         return $clientRegistry
             ->getClient('auth0')
