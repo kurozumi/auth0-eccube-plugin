@@ -45,11 +45,9 @@ class Auth0Controller extends AbstractController
      *
      * @Route("", name="auth0")
      */
-    public function index(Request $request)
+    public function index(ClientRegistry $clientRegistry)
     {
-        /** @var ClientRegistry $registry */
-        $registry = $this->get('oauth2.registry');
-        return $registry
+        return $clientRegistry
             ->getClient('auth0')
             ->redirect(['openid email email_verified']);
     }
