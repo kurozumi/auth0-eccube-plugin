@@ -43,7 +43,7 @@ class Auth0Controller extends AbstractController
      * @param Request $request
      * @return mixed
      *
-     * @Route("/", name="auth0")
+     * @Route("", name="auth0")
      */
     public function index(Request $request)
     {
