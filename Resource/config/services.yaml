@@ -16,8 +16,8 @@ knpu_oauth2_client:
       # custom_domain: null
       # Your Auth0 domain/account, e.g. "mycompany" if your domain is "mycompany.auth0.com"
       #
-      account: a-zumi
+      account: '%env(OAUTH_AUTH0_ACCOUNT)%'
       # Your Auth0 region, e.g. "eu" if your tenant is in the EU.
-      region: us
+      region: '%env(OAUTH_AUTH0_REGION)%'
       # whether to check OAuth2 "state": defaults to true
       # use_state: true
