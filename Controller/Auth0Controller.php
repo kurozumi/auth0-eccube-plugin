@@ -22,6 +22,8 @@ use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 /**
  * Class Auth0Controller
  * @package Plugin\SocialLogin4\Controller
+ *
+ * @Route("/auth0")
  */
 class Auth0Controller extends AbstractController
 {
@@ -39,11 +41,12 @@ class Auth0Controller extends AbstractController
 
     /**
      * @param Request $request
-     * @return mixed
+     * @param ClientRegistry $clientRegistry
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/auth0", name="auth0")
      */
-    public function index(ClientRegistry $clientRegistry)
+    public function index(Request $request, ClientRegistry $clientRegistry)
     {
         return $clientRegistry
             ->getClient('auth0')
@@ -53,7 +56,7 @@ class Auth0Controller extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("/auth0/connect_check", name="auth0_connect_check")
+     * @Route("/connect_check", name="auth0_connect_check")
      */
     public function connect_check()
     {
