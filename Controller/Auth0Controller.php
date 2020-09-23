@@ -51,7 +51,7 @@ class Auth0Controller extends AbstractController
         $registry = $this->get('oauth2.registry');
         return $registry
             ->getClient('auth0')
-            ->redirect(['email']);
+            ->redirect(['openid email email_verified']);
     }
 
     /**
