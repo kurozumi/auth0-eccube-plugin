@@ -15,7 +15,6 @@ namespace Plugin\SocialLogin4\Controller;
 
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\TokenStorage\TokenStorageInterface;
 
@@ -43,7 +42,7 @@ class Auth0Controller extends AbstractController
      * @param ClientRegistry $clientRegistry
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("", name="auth0")
+     * @Route("/connect", name="auth0_connect")
      */
     public function index(ClientRegistry $clientRegistry)
     {
@@ -55,9 +54,9 @@ class Auth0Controller extends AbstractController
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("/connect_check", name="auth0_connect_check")
+     * @Route("/callback", name="auth0_callback")
      */
-    public function connect_check()
+    public function callback()
     {
         if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('mypage');
