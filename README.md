@@ -24,3 +24,7 @@ OAUTH_AUTH0_CLIENT_ID=****************************
 OAUTH_AUTH0_CLIENT_SECRET=****************************
 OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
 ```
+
+## 利用可能なソーシャルログイン一覧
+
+![利用可能なソーシャルログイン一覧](https://github.com/kurozumi/SocialLogin4/blob/images/social_connections.png)
