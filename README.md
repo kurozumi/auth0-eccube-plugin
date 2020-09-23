@@ -1,6 +1,7 @@
 # ソーシャルログイン for EC-CUBE4
 
-Auth0を使用してEC-CUBE4でソーシャルログインを実現するプラグインです。  
+[Auth0](https://auth0.com/jp/)を使用してEC-CUBE4でソーシャルログインを実現するプラグインです。 
+Auth0を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4にログインできるようになります。   
 非公式プラグインですのでご利用は自己責任でお願いいいたします。
 
 ## インストールと有効化
@@ -16,9 +17,10 @@ bin/console eccube:plugin:enable --code SocialLogin4
 
 ## ClientIdとClientSecretを設定
 
-Auth0でClientIdとClientSecretを取得して、環境変数（.env)に設定してください。
+Auth0でClientIdとClientSecret、Domainを取得して、環境変数（.env)に設定してください。
 
 ```
 OAUTH_AUTH0_CLIENT_ID=****************************
 OAUTH_AUTH0_CLIENT_SECRET=****************************
+OAUTH_AUTH0_CUSTOM_DOMAIN=domain
 ```
