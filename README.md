@@ -22,5 +22,5 @@ Auth0でClientIdとClientSecret、Domainを取得して、環境変数（.env)�
 ```
 OAUTH_AUTH0_CLIENT_ID=****************************
 OAUTH_AUTH0_CLIENT_SECRET=****************************
-OAUTH_AUTH0_CUSTOM_DOMAIN=domain
+OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
 ```
