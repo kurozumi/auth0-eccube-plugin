@@ -1,0 +1,78 @@
+<?php
+/**
+ * This file is part of SocialLogin4
+ *
+ * Copyright(c) Akira Kurozumi <info@a-zumi.net>
+ *
+ *  https://a-zumi.net
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace Plugin\SocialLogin4\Form\Extension;
+
+
+use Eccube\Entity\Customer;
+use Eccube\Form\Type\Front\EntryType;
+use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
+use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\HttpFoundation\RequestStack;
+
+class EntryTypeExtension extends AbstractTypeExtension
+{
+    use FinishRegistrationBehavior;
+
+    /**
+     * @var RequestStack
+     */
+    private $requestStack;
+
+    public function __construct(
+        RequestStack $requestStack
+    )
+    {
+        $this->requestStack = $requestStack;
+    }
+
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $userInfo = $this->getUserInfoFromSession($this->requestStack->getMasterRequest());
+        if($userInfo) {
+            // メールアドレスをセット
+            $builder
+                ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($userInfo) {
+                    $form = $event->getForm();
+                    $form['email']->setData($userInfo['email']);
+                });
+
+            // ユーザー識別子をCustomerにセット
+            $builder
+                ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($userInfo) {
+                    /** @var Customer $Customer */
+                    $Customer = $event->getData();
+                    $Customer->setAuth0Id($userInfo['user_id']);
+                });
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getExtendedType()
+    {
+        // TODO: Implement getExtendedType() method.
+        return EntryType::class;
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [EntryType::class];
+    }
+}
