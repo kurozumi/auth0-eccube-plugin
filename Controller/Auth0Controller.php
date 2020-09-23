@@ -61,7 +61,7 @@ class Auth0Controller extends AbstractController
         if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('mypage');
         } else {
-            return $this->redirectToRoute('auth0');
+            return $this->redirectToRoute('auth0_connect');
         }
     }
 }

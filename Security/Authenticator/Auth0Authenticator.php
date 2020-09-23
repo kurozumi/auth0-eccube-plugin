@@ -59,7 +59,7 @@ class Auth0Authenticator extends SocialAuthenticator
 
     public function supports(Request $request)
     {
-        return $request->attributes->get('_route') === 'connect_auth0_check';
+        return $request->attributes->get('_route') === 'auth0_callback';
     }
 
     /**
@@ -69,7 +69,7 @@ class Auth0Authenticator extends SocialAuthenticator
     {
         // TODO: Implement start() method.
         return new RedirectResponse(
-            $this->router->generate("auth0"),
+            $this->router->generate("auth0_connect"),
             Response::HTTP_TEMPORARY_REDIRECT
         );
     }
