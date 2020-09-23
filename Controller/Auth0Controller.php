@@ -44,7 +44,7 @@ class Auth0Controller extends AbstractController
      * @param ClientRegistry $clientRegistry
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
-     * @Route("/auth0", name="auth0")
+     * @Route("", name="auth0")
      */
     public function index(Request $request, ClientRegistry $clientRegistry)
     {
