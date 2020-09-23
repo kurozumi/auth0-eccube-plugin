@@ -8,6 +8,8 @@ Auth0を使用してEC-CUBE4でソーシャルログインを実現するプラ�
 bin/console eccube:composer:require knpuniversity/oauth2-client-bundle:1.34.0
 bin/console eccube:composer:require riskio/oauth2-auth0
 
+git clone git@github.com:kurozumi/SocialLogin4.git
+
 bin/console eccube:plugin:install --code SocialLogin4
 bin/console eccube:plugin:enable --code SocialLogin4
 ```
