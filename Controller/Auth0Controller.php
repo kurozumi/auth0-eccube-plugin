@@ -40,7 +40,6 @@ class Auth0Controller extends AbstractController
     }
 
     /**
-     * @param Request $request
      * @param ClientRegistry $clientRegistry
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
