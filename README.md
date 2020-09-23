@@ -1,6 +1,6 @@
 # ソーシャルログイン for EC-CUBE4
 
-[Auth0](https://auth0.com/jp/)を使用してEC-CUBE4でソーシャルログインを実現するプラグインです。  
+[Auth0](https://auth0.com/jp/)を使用してEC-CUBE4でソーシャルログインを実現するプラグイン（サンプル）です。  
 Auth0を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4にログインできるようになります。   
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
 
