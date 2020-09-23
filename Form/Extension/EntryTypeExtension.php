@@ -15,6 +15,7 @@ namespace Plugin\SocialLogin4\Form\Extension;
 
 use Eccube\Entity\Customer;
 use Eccube\Form\Type\Front\EntryType;
+use Eccube\Form\Type\RepeatedEmailType;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -42,6 +43,11 @@ class EntryTypeExtension extends AbstractTypeExtension
     {
         $userInfo = $this->getUserInfoFromSession($this->requestStack->getMasterRequest());
         if ($userInfo) {
+            $builder
+                ->add('email', RepeatedEmailType::class, [
+                    'attr' => ["readonly" => "readonly"]
+                ]);
+
             // メールアドレスをセット
             $builder
                 ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($userInfo) {
