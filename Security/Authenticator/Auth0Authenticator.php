@@ -100,7 +100,7 @@ class Auth0Authenticator extends SocialAuthenticator
         $Customer = $this->entityManager->getRepository(Customer::class)
             ->findOneBy(['auth0_id' => $user->toArray()["sub"]]);
 
-        if($Customer) {
+        if ($Customer) {
             return $Customer;
         }
 
@@ -108,12 +108,12 @@ class Auth0Authenticator extends SocialAuthenticator
             ->findOneBy(['email' => $user->getEmail()]);
 
         // 会員登録していない場合、会員登録ページへ
-        if(null === $Customer) {
+        if (null === $Customer) {
             throw new FinishRegistrationException($user->toArray());
         }
 
         // 会員登録済みの場合はユーザー識別子を保存
-        $Customer->setAuth0Id($user->getId());
+        $Customer->setAuth0Id($user->toArray()["sub"]);
         $this->entityManager->persist($Customer);
         $this->entityManager->flush();
 
@@ -128,7 +128,7 @@ class Auth0Authenticator extends SocialAuthenticator
         // TODO: Implement onAuthenticationFailure() method.
 
         // 会員登録していない場合
-        if($exception instanceof FinishRegistrationException) {
+        if ($exception instanceof FinishRegistrationException) {
             $this->saveUserInfoToSession($request, $exception);
             return new RedirectResponse($this->router->generate('entry'));
         } else {
@@ -166,7 +166,7 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function createAuthenticatedToken(UserInterface $user, $providerKey)
     {
-        if ( $user instanceof Customer && $providerKey === 'customer') {
+        if ($user instanceof Customer && $providerKey === 'customer') {
             return new UsernamePasswordToken($user, null, $providerKey, ['ROLE_USER']);
         }
 

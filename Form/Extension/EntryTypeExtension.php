@@ -41,7 +41,7 @@ class EntryTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $userInfo = $this->getUserInfoFromSession($this->requestStack->getMasterRequest());
-        if($userInfo) {
+        if ($userInfo) {
             // メールアドレスをセット
             $builder
                 ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($userInfo) {
@@ -54,7 +54,7 @@ class EntryTypeExtension extends AbstractTypeExtension
                 ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($userInfo) {
                     /** @var Customer $Customer */
                     $Customer = $event->getData();
-                    $Customer->setAuth0Id($userInfo['user_id']);
+                    $Customer->setAuth0Id($userInfo['sub']);
                 });
         }
     }
