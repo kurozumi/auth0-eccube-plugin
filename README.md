@@ -5,8 +5,8 @@ Auth0を使用してEC-CUBE4でソーシャルログインを実現するプラ�
 
 ## インストールと有効化
 ```
-composer require knpuniversity/oauth2-client-bundle:1.34.0
-composer require riskio/oauth2-auth0
+bin/console eccube:composer:require knpuniversity/oauth2-client-bundle:1.34.0
+bin/console eccube:composer:require riskio/oauth2-auth0
 
 bin/console eccube:plugin:install --code SocialLogin4
 bin/console eccube:plugin:enable --code SocialLogin4
