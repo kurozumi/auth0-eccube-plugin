@@ -98,7 +98,7 @@ class Auth0Authenticator extends SocialAuthenticator
 
         // 連携済みの場合
         $Customer = $this->entityManager->getRepository(Customer::class)
-            ->findOneBy(['auth0_id' => $user->getId()]);
+            ->findOneBy(['auth0_id' => $user->toArray()["sub"]]);
 
         if($Customer) {
             return $Customer;
