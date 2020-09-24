@@ -80,11 +80,7 @@ class Auth0Authenticator extends SocialAuthenticator
     public function getCredentials(Request $request)
     {
         // TODO: Implement getCredentials() method.
-        try {
-            return $this->fetchAccessToken($this->getAuth0Client());
-        } catch (AuthenticationException $exception) {
-            throw new $exception;
-        }
+        return $this->fetchAccessToken($this->getAuth0Client());
     }
 
     /**
