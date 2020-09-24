@@ -27,6 +27,12 @@ OAUTH_AUTH0_CLIENT_SECRET=****************************
 OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
 ```
 
+## ソーシャルログインページへのリンク設定
+
+```
+<a href="{{ url('auth0_connect') }}">ソーシャルログイン</a>
+```
+
 ## 利用可能なソーシャルログイン一覧
 
 ![利用可能なソーシャルログイン一覧](https://github.com/kurozumi/SocialLogin4/blob/images/social_connections.png)
