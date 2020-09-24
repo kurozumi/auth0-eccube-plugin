@@ -2,9 +2,13 @@
 
 ![Auth0ログインページ](https://github.com/kurozumi/SocialLogin4/blob/images/auth0-login-page.png)
 
-[Auth0](https://auth0.com/jp/)を使用してEC-CUBE4でソーシャルログインを実現するプラグイン（サンプル）です。  
-[Auth0](https://auth0.com/jp/)を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4にログインできるようになります。   
+[Auth0](https://auth0.com/jp/) を使用してEC-CUBE4でソーシャルログインを実現するプラグイン（サンプル）です。  
+[Auth0](https://auth0.com/jp/) を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4にログインできるようになります。   
+
+本プラグインの利用には EC-CUBE 4.0.5 以上へのアップデートが必要になります。
+
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
+
 
 ## インストールと有効化
 ```
@@ -17,9 +21,10 @@ bin/console eccube:plugin:install --code SocialLogin4
 bin/console eccube:plugin:enable --code SocialLogin4
 ```
 
-## ClientIdとClientSecretを設定
 
-Auth0でClientIdとClientSecret、Domainを取得して、環境変数（.env)に設定してください。
+## ClientIdとClientSecret、Domainを設定
+
+[Auth0](https://auth0.com/jp/) でClientIdとClientSecret、Domainを取得して、環境変数（.env)に設定してください。
 
 ```
 OAUTH_AUTH0_CLIENT_ID=****************************
@@ -27,18 +32,21 @@ OAUTH_AUTH0_CLIENT_SECRET=****************************
 OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
 ```
 
+
 ## ソーシャルログインページへのリンク設定
 
 ```
 <a href="{{ url('auth0_connect') }}">ソーシャルログイン</a>
 ```
 
+
 ## 利用可能なソーシャルログイン一覧
 
 ![利用可能なソーシャルログイン一覧](https://github.com/kurozumi/SocialLogin4/blob/images/social_connections.png)
 
+
 ## ユーザー名・パスワード認証停止
 
-ユーザー名・パスワード認証（Username-Password-Authentication）は[Auth0](https://auth0.com/jp/)の管理画面で停止してください。
+ユーザー名・パスワード認証（Username-Password-Authentication）は [Auth0](https://auth0.com/jp/) の管理画面で停止してください。
 
 ![ユーザー名・パスワードログイン停止](https://github.com/kurozumi/SocialLogin4/blob/images/disable-username-password-auth.png)
