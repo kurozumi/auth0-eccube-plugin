@@ -1,4 +1,4 @@
-# ソーシャルログイン for EC-CUBE4
+# ソーシャルログインプラグイン for EC-CUBE4
 
 ![Auth0ログインページ](https://github.com/kurozumi/SocialLogin4/blob/images/auth0-login-page.png)
 

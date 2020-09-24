@@ -1,7 +1,7 @@
 {
     "name": "ec-cube/SocialLogin4",
     "version": "1.0.0",
-    "description": "ソーシャルログイン for EC-CUBE4",
+    "description": "ソーシャルログインプラグイン for EC-CUBE4",
     "type": "eccube-plugin",
     "require": {
         "ec-cube/plugin-installer": "~0.0.7",
