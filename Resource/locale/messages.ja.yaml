@@ -1,0 +1,6 @@
+plguin.social_login.admin.config.title: 'ソーシャルログイン'
+plguin.social_login.admin.config.sub_title: '設定'
+plguin.social_login.admin.setting.title: 'Auth0設定'
+plguin.social_login.admin.client_id.label: 'Client ID'
+plguin.social_login.admin.client_secret.label: 'Client Secret'
+plguin.social_login.admin.custom_domain.label: 'Domain'

@@ -13,12 +13,14 @@
 namespace Plugin\SocialLogin4\DependencyInjection;
 
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Configuration;
+use Doctrine\DBAL\DriverManager;
+use Eccube\DependencyInjection\EccubeExtension;
+use Plugin\SocialLogin4\Entity\Config;
 use Plugin\SocialLogin4\Security\Authenticator\Auth0Authenticator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
-use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class SocialLoginExtension extends Extension implements PrependExtensionInterface
+class SocialLoginExtension extends EccubeExtension
 {
 
     /**
@@ -41,7 +43,6 @@ class SocialLoginExtension extends Extension implements PrependExtensionInterfac
                 Auth0Authenticator::class
             ]
         ];
-
         $container->prependExtensionConfig('security', ['firewalls' => $firewalls]);
     }
 }

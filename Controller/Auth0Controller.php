@@ -15,6 +15,8 @@ namespace Plugin\SocialLogin4\Controller;
 
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use Plugin\SocialLogin4\Repository\ConfigRepository;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,8 +33,17 @@ class Auth0Controller extends AbstractController
      *
      * @Route("/connect", name="auth0_connect")
      */
-    public function index(ClientRegistry $clientRegistry)
+    public function index(ClientRegistry $clientRegistry, ConfigRepository $configRepository)
     {
+        $Config = $configRepository->get();
+        if (!$Config) {
+            throw new NotFoundHttpException();
+        }
+
+        if (!$Config->getClientId() || !$Config->getClientSecret() || !$Config->getCustomDomain()) {
+            throw new NotFoundHttpException();
+        }
+
         return $clientRegistry
             ->getClient('auth0')
             ->redirect(['openid email email_verified']);
