@@ -24,13 +24,9 @@ bin/console eccube:plugin:enable --code SocialLogin4
 
 ## ClientIdとClientSecret、Domainを設定
 
-[Auth0](https://auth0.com/jp/) でClientIdとClientSecret、Domainを取得して、環境変数（.env)に設定してください。
+[Auth0](https://auth0.com/jp/) でClientIdとClientSecret、Domainを取得して、管理画面で設定してください。
 
-```
-OAUTH_AUTH0_CLIENT_ID=****************************
-OAUTH_AUTH0_CLIENT_SECRET=****************************
-OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
-```
+![Auth0設定画面](https://github.com/kurozumi/SocialLogin4/blob/images/admin-auth0-setting.png)
 
 
 ## ソーシャルログインページへのリンク設定
