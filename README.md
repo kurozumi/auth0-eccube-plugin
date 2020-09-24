@@ -31,8 +31,8 @@ OAUTH_AUTH0_CUSTOM_DOMAIN=****************************
 
 ![利用可能なソーシャルログイン一覧](https://github.com/kurozumi/SocialLogin4/blob/images/social_connections.png)
 
-## ユーザー名・パスワードログイン停止
+## ユーザー名・パスワード認証停止
 
-ユーザー名・パスワードログインは[Auth0](https://auth0.com/jp/)の管理画面で停止してください。
+ユーザー名・パスワード認証（Username-Password-Authentication）は[Auth0](https://auth0.com/jp/)の管理画面で停止してください。
 
 ![ユーザー名・パスワードログイン停止](https://github.com/kurozumi/SocialLogin4/blob/images/disable-username-password-auth.png)
