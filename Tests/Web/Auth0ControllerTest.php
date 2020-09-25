@@ -15,7 +15,6 @@ namespace Plugin\SocialLogin4\Tests\Web;
 
 use Eccube\Tests\Web\AbstractWebTestCase;
 use Plugin\SocialLogin4\Entity\Config;
-use Plugin\SocialLogin4\Repository\ConfigRepository;
 
 class Auth0ControllerTest extends AbstractWebTestCase
 {
@@ -37,7 +36,8 @@ class Auth0ControllerTest extends AbstractWebTestCase
 
     public function testAuth0の設定をしていたらリダイレクト()
     {
-        $Config = new Config();
+        /** @var Config $Config */
+        $Config = $this->entityManager->getRepository(Config::class)->get();
         $Config
             ->setClientId("dummy")
             ->setClientSecret("dummy")
