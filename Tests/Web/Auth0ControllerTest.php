@@ -13,10 +13,10 @@
 namespace Plugin\SocialLogin4\Tests\Web;
 
 
-use Eccube\Tests\Web\AbstractWebTestCase;
-use Plugin\SocialLogin4\Entity\Config;
+use Eccube\Common\Constant;
+use Eccube\Tests\Web\Admin\AbstractAdminWebTestCase;
 
-class Auth0ControllerTest extends AbstractWebTestCase
+class Auth0ControllerTest extends AbstractAdminWebTestCase
 {
     public function setUp()
     {
@@ -36,14 +36,14 @@ class Auth0ControllerTest extends AbstractWebTestCase
 
     public function testAuth0の設定をしていたらリダイレクト()
     {
-        /** @var Config $Config */
-        $Config = $this->entityManager->getRepository(Config::class)->get();
-        $Config
-            ->setClientId("dummy")
-            ->setClientSecret("dummy")
-            ->setCustomDomain("dummy");
-        $this->entityManager->persist($Config);
-        $this->entityManager->flush();
+        $this->client->request('POST', $this->generateUrl('social_login_admin_config'), [
+            'config' => [
+                'client_id' => 'dummy',
+                'client_secret' => 'dummy',
+                'custom_domain' => 'dummy',
+                Constant::TOKEN_NAME => 'dummy'
+            ]
+        ]);
 
         $this->client->request('GET', $this->generateUrl('auth0_connect'));
         self::assertTrue($this->client->getResponse()->isRedirection());
