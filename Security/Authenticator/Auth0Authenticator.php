@@ -92,6 +92,10 @@ class Auth0Authenticator extends SocialAuthenticator
         $user = $this->getAuth0Client()
             ->fetchUserFromToken($credentials);
 
+        if(!$user->toArray()['email_verified']) {
+            throw new AuthenticationException();
+        }
+
         // 連携済みの場合
         $Customer = $this->entityManager->getRepository(Customer::class)
             ->findOneBy(['auth0_id' => $user->toArray()["sub"]]);
