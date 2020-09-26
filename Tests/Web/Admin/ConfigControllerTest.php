@@ -37,7 +37,7 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         $envFile = $container->getParameter('kernel.project_dir') . '/.env';
 
         $fs = new Filesystem();
-        $fs->copy($envFile, $envFile.'.backup');
+        $fs->copy($envFile, $envFile . '.backup');
 
         $this->client->request('POST', $this->generateUrl('social_login_admin_config'), [
             'config' => [
@@ -66,35 +66,6 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         }
 
         // envファイルを戻す
-        $fs->rename($envFile.'.backup', $envFile, true);
-
-        $env = file_get_contents($envFile);
-        print_r($env);
-
-        $env = file_get_contents($envFile.'.backup');
-        print_r($env);
-    }
-
-    public function testENVファイルに上記の設定が残ったままか確認()
-    {
-        $container = self::$kernel->getContainer();
-        $envFile = $container->getParameter('kernel.project_dir') . '/.env';
-
-        $env = file_get_contents($envFile);
-
-        $keys = [
-            'OAUTH_AUTH0_CLIENT_ID',
-            'OAUTH_AUTH0_CLIENT_SECRET',
-            'OAUTH_AUTH0_CUSTOM_DOMAIN'
-        ];
-
-        foreach ($keys as $key) {
-            $pattern = '/^(' . $key . ')=(.*)/m';
-            if (preg_match($pattern, $env, $matches)) {
-                self::assertEquals('dummy', $matches[2]);
-            } else {
-                self::fail(sprintf("%sが見つかりませんでした。", $key));
-            }
-        }
+        $fs->rename($envFile . '.backup', $envFile, true);
     }
 }
