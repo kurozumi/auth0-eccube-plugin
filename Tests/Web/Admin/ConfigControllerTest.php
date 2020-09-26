@@ -17,6 +17,7 @@ use Eccube\Common\Constant;
 use Eccube\Tests\Web\Admin\AbstractAdminWebTestCase;
 use Eccube\Util\StringUtil;
 use Symfony\Component\Dotenv\Dotenv;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ConfigControllerTest extends AbstractAdminWebTestCase
 {
@@ -44,6 +45,9 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         $container = self::$kernel->getContainer();
         $envFile = $container->getParameter('kernel.project_dir') . '/.env';
 
+        $fs = new Filesystem();
+        $fs->copy($envFile, $envFile.'.backup');
+
         $env = file_get_contents($envFile);
 
         $keys = [
@@ -60,6 +64,8 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
                 self::fail(sprintf("%sが見つかりませんでした。", $key));
             }
         }
+
+        $fs->rename($envFile.'.backup', $envFile);
     }
 
     public function testENVファイルに上記の設定が残ったままか確認()
