@@ -71,12 +71,17 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
 
         $env = file_get_contents($envFile);
         print_r($env);
+
+        $env = file_get_contents($envFile.'.backup');
+        print_r($env);
     }
 
     public function testENVファイルに上記の設定が残ったままか確認()
     {
         $container = self::$kernel->getContainer();
         $envFile = $container->getParameter('kernel.project_dir') . '/.env';
+
+        $env = file_get_contents($envFile);
 
         $keys = [
             'OAUTH_AUTH0_CLIENT_ID',
