@@ -33,6 +33,12 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
 
     public function testAuth0情報を保存したらenvファイルに情報が追記されるか()
     {
+        $container = self::$kernel->getContainer();
+        $envFile = $container->getParameter('kernel.project_dir') . '/.env';
+
+        $fs = new Filesystem();
+        $fs->copy($envFile, $envFile.'.backup');
+
         $this->client->request('POST', $this->generateUrl('social_login_admin_config'), [
             'config' => [
                 'client_id' => 'dummy',
@@ -41,12 +47,6 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
                 Constant::TOKEN_NAME => 'dummy'
             ]
         ]);
-
-        $container = self::$kernel->getContainer();
-        $envFile = $container->getParameter('kernel.project_dir') . '/.env';
-
-        $fs = new Filesystem();
-        $fs->copy($envFile, $envFile.'.backup');
 
         $env = file_get_contents($envFile);
 
@@ -66,8 +66,7 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         }
 
         // envファイルを戻す
-        $env = file_get_contents($envFile.'.backup');
-        file_put_contents($envFile, $env);
+        $fs->rename($envFile.'.backup', $envFile, true);
 
         $env = file_get_contents($envFile);
         print_r($env);
