@@ -66,7 +66,8 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         }
 
         // envファイルを戻す
-        $fs->rename($envFile.'.backup', $envFile, true);
+        $env = file_get_contents($envFile.'.backup');
+        file_put_contents($envFile, $env);
     }
 
     public function testENVファイルに上記の設定が残ったままか確認()
