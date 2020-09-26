@@ -76,6 +76,8 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
 
         $env = file_get_contents($envFile);
 
+        print_r($env);
+
         $keys = [
             'OAUTH_AUTH0_CLIENT_ID',
             'OAUTH_AUTH0_CLIENT_SECRET',
