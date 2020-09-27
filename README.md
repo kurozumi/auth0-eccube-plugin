@@ -9,7 +9,7 @@
 
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
 
-## Auth0での設定例
+## Auth0の設定例
 ![Auth0](https://github.com/kurozumi/SocialLogin4/blob/images/auth0-setting-sample.png)
 
 ## インストールと有効化
