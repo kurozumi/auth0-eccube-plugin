@@ -48,3 +48,8 @@ bin/console eccube:plugin:enable --code SocialLogin4
 ユーザー名・パスワード認証（Username-Password-Authentication）は [Auth0](https://auth0.com/jp/) の管理画面で停止してください。
 
 ![ユーザー名・パスワードログイン停止](https://github.com/kurozumi/SocialLogin4/blob/images/disable-username-password-auth.png)
+
+
+## ソーシャルログインサービスの追加
+
+[Auth0のCustom Social Connectionを利用してYahoo! JAPANと接続する](https://qiita.com/hisashiyamaguchi/items/93516e371bbe279fffb9)
