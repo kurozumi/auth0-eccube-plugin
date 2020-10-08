@@ -98,11 +98,11 @@ class Auth0Authenticator extends SocialAuthenticator
             throw new AuthenticationException();
         }
 
-        // 連携済みの場合
         /** @var Connection $Connection */
         $Connection = $this->entityManager->getRepository(Connection::class)
             ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
+        // 連携済みの場合
         if ($Connection) {
             $Customer = $this->entityManager->getRepository(Customer::class)
                 ->findOneBy(['id' => $Connection->getCustomerId()]);

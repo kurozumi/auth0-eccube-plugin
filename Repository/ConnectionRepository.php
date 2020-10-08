@@ -31,17 +31,4 @@ class ConnectionRepository extends AbstractRepository
     {
         parent::__construct($registry, Connection::class);
     }
-
-    public function findOneByIdJoinedToCustomer($connect_id)
-    {
-        $query = $this->getEntityManager()
-            ->createQuery(
-            'SELECT conn, cus
-                FROM Plugin\SocialLogin4\Entity\Connection conn
-                INNER JOIN conn.Customer cus
-                WHERE conn.id = :id'
-        )->setParameter('id', $connect_id);
-
-        return $query->getOneOrNullResult();
-    }
 }
