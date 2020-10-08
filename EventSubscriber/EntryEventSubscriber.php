@@ -14,6 +14,7 @@ namespace Plugin\SocialLogin4\EventSubscriber;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Eccube\Entity\Customer;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
@@ -62,13 +63,14 @@ class EntryEventSubscriber implements EventSubscriberInterface
             return;
         }
 
+        /** @var Customer $Customer */
         $Customer = $args->getArgument('Customer');
 
         $userInfo = $this->getUserInfoFromSession($request);
         if($userInfo) {
             $Connection = new Connection();
             $Connection->setUserId($userInfo['sub']);
-            $Connection->setCustomer($Customer);
+            $Connection->setCustomerId($Customer->getId());
             $this->entityManager->persist($Connection);
             $this->entityManager->flush();
 

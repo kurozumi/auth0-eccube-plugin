@@ -104,12 +104,12 @@ class Auth0Authenticator extends SocialAuthenticator
             ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
         if ($Connection) {
-            // リレーションの影響でプロクシのカスタマーオブジェクトが帰ってくるので再取得
-            $Connection = $this->entityManager->getRepository(Connection::class)
-                ->findOneByIdJoinedToCustomer($Connection->getId());
-            return $Connection->getCustomer();
+            $Customer = $this->entityManager->getRepository(Customer::class)
+                ->findOneBy(['id' => $Connection->getCustomerId()]);
+            return $Customer;
         }
 
+        /** @var Customer $Customer */
         $Customer = $this->entityManager->getRepository(Customer::class)
             ->findOneBy(['email' => $user->getEmail()]);
 
@@ -121,7 +121,7 @@ class Auth0Authenticator extends SocialAuthenticator
         // 会員登録済みの場合はユーザー識別子を保存
         $Connection = new Connection();
         $Connection->setUserId($user->toArray()["sub"]);
-        $Connection->setCustomer($Customer);
+        $Connection->setCustomerId($Customer->getId());
         $this->entityManager->persist($Connection);
         $this->entityManager->flush();
 

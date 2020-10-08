@@ -14,7 +14,6 @@ namespace Plugin\SocialLogin4\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Eccube\Entity\Customer;
 
 /**
  * Class Connection
@@ -42,12 +41,11 @@ class Connection
     private $user_id;
 
     /**
-     * @var Customer
+     * @var int
      *
-     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer", inversedBy="Connections")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
-    private $Customer;
+    private $customer_id;
 
     /**
      * @return int
@@ -77,20 +75,20 @@ class Connection
     }
 
     /**
-     * @return Customer
+     * @return int
      */
-    public function getCustomer(): Customer
+    public function getCustomerId(): int
     {
-        return $this->Customer;
+        return $this->customer_id;
     }
 
     /**
-     * @param Customer $Customer
+     * @param int $customer_id
      * @return $this
      */
-    public function setCustomer(Customer $Customer): self
+    public function setCustomerId(int $customer_id): self
     {
-        $this->Customer = $Customer;
+        $this->customer_id = $customer_id;
 
         return $this;
     }
