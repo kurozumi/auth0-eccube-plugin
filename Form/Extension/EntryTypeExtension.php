@@ -54,14 +54,6 @@ class EntryTypeExtension extends AbstractTypeExtension
                     $form = $event->getForm();
                     $form['email']->setData($userInfo['email']);
                 });
-
-            // ユーザー識別子をCustomerにセット
-            $builder
-                ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) use ($userInfo) {
-                    /** @var Customer $Customer */
-                    $Customer = $event->getData();
-                    $Customer->setAuth0Id($userInfo['sub']);
-                });
         }
     }
 
