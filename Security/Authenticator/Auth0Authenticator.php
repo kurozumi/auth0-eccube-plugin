@@ -19,6 +19,7 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
+use Plugin\SocialLogin4\Entity\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -97,11 +98,12 @@ class Auth0Authenticator extends SocialAuthenticator
         }
 
         // 連携済みの場合
-        $Customer = $this->entityManager->getRepository(Customer::class)
-            ->findOneBy(['auth0_id' => $user->toArray()["sub"]]);
+        /** @var Connection $Connection */
+        $Connection = $this->entityManager->getRepository(Connection::class)
+            ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
-        if ($Customer) {
-            return $Customer;
+        if ($Connection) {
+            return $Connection->getCustomer();
         }
 
         $Customer = $this->entityManager->getRepository(Customer::class)
@@ -113,8 +115,10 @@ class Auth0Authenticator extends SocialAuthenticator
         }
 
         // 会員登録済みの場合はユーザー識別子を保存
-        $Customer->setAuth0Id($user->toArray()["sub"]);
-        $this->entityManager->persist($Customer);
+        $Connection = new Connection();
+        $Connection->setUserId($user->toArray()["sub"]);
+        $Connection->setCustomer($Customer);
+        $this->entityManager->persist($Connection);
         $this->entityManager->flush();
 
         return $Customer;

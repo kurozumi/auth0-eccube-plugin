@@ -12,6 +12,8 @@
 
 namespace Plugin\SocialLogin4\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Eccube\Annotation\EntityExtension;
 
@@ -24,27 +26,56 @@ use Eccube\Annotation\EntityExtension;
 trait CustomerTrait
 {
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Plugin\SocialLogin4\Entity\Connection", mappedBy="Customer")
      */
-    private $auth0_id;
+    private $Connections;
 
     /**
-     * @return string|null
+     * @return Collection
      */
-    public function getAuth0Id(): ?string
+    public function getConnections(): Collection
     {
-        return $this->auth0_id;
+        if(null === $this->Connections) {
+            $this->Connections = new ArrayCollection();
+        }
+
+        return $this->Connections;
     }
 
     /**
-     * @param string|null $auth0_id
+     * @param Connection $connection
      * @return $this
      */
-    public function setAuth0Id(?string $auth0_id): self
+    public function addConnection(Connection $connection): self
     {
-        $this->auth0_id = $auth0_id;
+        if(null === $this->Connections) {
+            $this->Connections = new ArrayCollection();
+        }
+
+        if(false === $this->Connections->contains($connection)) {
+            $this->Connections->add($connection);
+            $connection->setCustomer($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Connection $connection
+     * @return $this
+     */
+    public function removeConnection(Connection $connection): self
+    {
+        if(null === $this->Connections) {
+            $this->Connections = new ArrayCollection();
+        }
+
+        if($this->Connections->contains($connection)) {
+            $this->Connections->removeElement($connection);
+            if($connection->getCustomer() === $this) {
+                $connection->setCustomer(null);
+            }
+        }
 
         return $this;
     }

@@ -12,33 +12,24 @@
 
 namespace Plugin\SocialLogin4\Repository;
 
+
 use Eccube\Repository\AbstractRepository;
-use Plugin\SocialLogin4\Entity\Config;
+use Plugin\SocialLogin4\Entity\Connection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class ConfigRepository
+ * Class ConnectionRepository
  * @package Plugin\SocialLogin4\Repository
  */
-class ConfigRepository extends AbstractRepository
+class ConnectionRepository extends AbstractRepository
 {
     /**
-     * ConfigRepository constructor.
-     *
+     * ConnectionRepository constructor.
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Config::class);
+        parent::__construct($registry, Connection::class);
     }
 
-    /**
-     * @param int $id
-     *
-     * @return null|Config
-     */
-    public function get($id = 1)
-    {
-        return $this->find($id);
-    }
 }
