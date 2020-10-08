@@ -99,14 +99,14 @@ class Auth0Authenticator extends SocialAuthenticator
         }
 
         // 連携済みの場合
-        /** @var ConnectionRepository $ConnectionRepository */
-        $ConnectionRepository = $this->entityManager->getRepository(Connection::class);
         /** @var Connection $Connection */
-        $Connection = $ConnectionRepository->findOneBy(['user_id' => $user->toArray()["sub"]]);
+        $Connection = $this->entityManager->getRepository(Connection::class)
+            ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
         if ($Connection) {
             // リレーションの影響でプロクシのカスタマーオブジェクトが帰ってくるので再取得
-            $Connection = $ConnectionRepository->findOneByIdJoinedToCustomer($Connection->getId());
+            $Connection = $this->entityManager->getRepository(Connection::class)
+                ->findOneByIdJoinedToCustomer($Connection->getId());
             return $Connection->getCustomer();
         }
 
