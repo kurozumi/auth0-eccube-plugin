@@ -20,6 +20,7 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\SocialLogin4\Entity\Connection;
+use ProxyManager\Generator\Util\ClassGeneratorUtils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -103,9 +104,7 @@ class Auth0Authenticator extends SocialAuthenticator
             ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
         if ($Connection) {
-            $Customer = $this->entityManager->getRepository(Customer::class)
-                ->findOneBy(['email' => $user->getEmail()]);
-            return $Customer;
+            return $Connection->getCustomer();
         }
 
         $Customer = $this->entityManager->getRepository(Customer::class)
