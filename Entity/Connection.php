@@ -20,7 +20,7 @@ use Eccube\Entity\Customer;
  * Class Connection
  * @package Plugin\SocialLogin4\Entity
  *
- * @ORM\Table(name="plg_social_login_connection")
+ * @ORM\Table(name="plg_social_login_connection", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id", "customer_id"})})
  * @ORM\Entity(repositoryClass="Plugin\SocialLogin4\Repository\ConnectionRepository")
  */
 class Connection
