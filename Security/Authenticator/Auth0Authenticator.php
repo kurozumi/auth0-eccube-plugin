@@ -20,7 +20,6 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\SocialLogin4\Entity\Connection;
-use Plugin\SocialLogin4\Repository\ConnectionRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
