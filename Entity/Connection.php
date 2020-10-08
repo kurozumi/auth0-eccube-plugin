@@ -44,7 +44,7 @@ class Connection
     /**
      * @var Customer
      *
-     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer", inversedBy="Connections", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer", inversedBy="Connections")
      * @ORM\JoinColumn(nullable=false)
      */
     private $Customer;
