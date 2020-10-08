@@ -93,7 +93,7 @@ class Auth0Authenticator extends SocialAuthenticator
         $user = $this->getAuth0Client()
             ->fetchUserFromToken($credentials);
 
-        if(!$user->toArray()['email_verified']) {
+        if (!$user->toArray()['email_verified']) {
             throw new AuthenticationException();
         }
 
@@ -103,8 +103,9 @@ class Auth0Authenticator extends SocialAuthenticator
             ->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
         if ($Connection) {
-            return $this->entityManager->getRepository(Customer::class)
-                ->findOneBy(['email' => $Connection->getCustomer()->getEmail()]);
+            $Customer = $this->entityManager->getRepository(Customer::class)
+                ->findOneBy(['email' => $user->getEmail()]);
+            return $Customer;
         }
 
         $Customer = $this->entityManager->getRepository(Customer::class)
