@@ -20,7 +20,7 @@ use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\SocialLogin4\Entity\Connection;
-use ProxyManager\Generator\Util\ClassGeneratorUtils;
+use Plugin\SocialLogin4\Repository\ConnectionRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,13 +99,15 @@ class Auth0Authenticator extends SocialAuthenticator
         }
 
         // 連携済みの場合
+        /** @var ConnectionRepository $ConnectionRepository */
+        $ConnectionRepository = $this->entityManager->getRepository(Connection::class);
         /** @var Connection $Connection */
-        $Connection = $this->entityManager->getRepository(Connection::class)
-            ->findOneBy(['user_id' => $user->toArray()["sub"]]);
+        $Connection = $ConnectionRepository->findOneBy(['user_id' => $user->toArray()["sub"]]);
 
         if ($Connection) {
-            return $this->entityManager->getRepository(Customer::class)
-                ->findOneBy(['email' => $user->getEmail()]);
+            // リレーションの影響でプロクシのカスタマーオブジェクトが帰ってくるので再取得
+            $Connection = $ConnectionRepository->findOneByIdJoinedToCustomer($Connection->getId());
+            return $Connection->getCustomer();
         }
 
         $Customer = $this->entityManager->getRepository(Customer::class)
