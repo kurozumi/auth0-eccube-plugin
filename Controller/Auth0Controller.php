@@ -46,7 +46,7 @@ class Auth0Controller extends AbstractController
 
         return $clientRegistry
             ->getClient('auth0')
-            ->redirect(['openid email email_verified']);
+            ->redirect(['openid email email_verified profile']);
     }
 
     /**
