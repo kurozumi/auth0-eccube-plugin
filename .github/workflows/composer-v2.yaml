@@ -31,7 +31,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
-          tools: composer:v1
+          tools: composer:v2
 
       - name: Install EC-CUBE
         env:
@@ -138,7 +138,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
-          tools: composer:v1
+          tools: composer:v2
 
       - name: Install EC-CUBE
         env:
