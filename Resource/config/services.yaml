@@ -20,3 +20,11 @@ knpu_oauth2_client:
       # region: null
       # whether to check OAuth2 "state": defaults to true
       # use_state: true
+
+services:
+  Auth0\SDK\Auth0:
+    arguments:
+      - domain: '%env(OAUTH_AUTH0_CUSTOM_DOMAIN)%'
+        client_id: '%env(OAUTH_AUTH0_CLIENT_ID)%'
+        client_secret: '%env(OAUTH_AUTH0_CLIENT_SECRET)%'
+        redirect_uri: auth0_callback
