@@ -1,5 +1,5 @@
-name: CI/CD for EC-CUBE4 PLUGIN
-on: push
+name: CI/CD for EC-CUBE4 Plugin with Composer:v2
+on: workflow_dispatch
 jobs:
   mysql:
     name: MySQL
@@ -31,6 +31,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
+          tools: composer:v1
 
       - name: Install EC-CUBE
         env:
@@ -137,6 +138,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
+          tools: composer:v1
 
       - name: Install EC-CUBE
         env:
