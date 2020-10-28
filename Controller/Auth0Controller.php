@@ -13,12 +13,9 @@
 namespace Plugin\SocialLogin4\Controller;
 
 
-use Auth0\SDK\API\Management\Users;
-use Auth0\SDK\Auth0;
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Plugin\SocialLogin4\Repository\ConfigRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,18 +27,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class Auth0Controller extends AbstractController
 {
-    /**
-     * @var Auth0
-     */
-    private $auth0;
-
-    public function __construct(
-        Auth0 $auth0
-    )
-    {
-        $this->auth0 = $auth0;
-    }
-
     /**
      * @param ClientRegistry $clientRegistry
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -76,14 +61,5 @@ class Auth0Controller extends AbstractController
         } else {
             return $this->redirectToRoute('auth0_connect');
         }
-    }
-
-    public function delete(Request $request)
-    {
-        $this->isTokenValid();
-
-        $this->auth0->getUser();
-
-        $users = new Users();
     }
 }

@@ -14,7 +14,6 @@ namespace Plugin\SocialLogin4\Tests\Web;
 
 
 use Eccube\Tests\Web\AbstractWebTestCase;
-use Eccube\Util\StringUtil;
 
 class Auth0ControllerTest extends AbstractWebTestCase
 {
