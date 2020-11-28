@@ -34,7 +34,7 @@ class ConfigControllerTest extends PluginTestCase
 
     public function testAuth0情報を保存したらenvファイルに情報が追記されるか()
     {
-        $envFile = $this->testContainer->getParameter('kernel.project_dir') . '/.env';
+        $envFile = self::$container->getParameter('kernel.project_dir') . '/.env';
 
         $fs = new Filesystem();
         $fs->copy($envFile, $envFile . '.backup');

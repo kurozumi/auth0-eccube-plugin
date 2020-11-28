@@ -112,7 +112,7 @@ jobs:
       matrix:
         php-versions: [7.1,7.2,7.3]
         postgres-versions: [9.4, 10]
-        eccube-versions: ['experimental/symfony4.4']
+        eccube-versions: ['4.1']
     services:
       postgres:
         image: postgres:${{ matrix.postgres-versions }}
