@@ -12,13 +12,13 @@ abstract class PluginTestCase extends AbstractWebTestCase
     /**
      * @var ContainerInterface
      */
-    protected static $container;
+    protected static $testContainer;
 
     public function setUp()
     {
         parent::setUp();
 
         $container = self::$kernel->getContainer();
-        static::$container = $container->has('test.service_container') ? $container->get('test.service_container') : $container;
+        static::$testContainer = $container->has('test.service_container') ? $container->get('test.service_container') : $container;
     }
 }
