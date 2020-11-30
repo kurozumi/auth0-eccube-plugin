@@ -14,10 +14,11 @@ namespace Plugin\SocialLogin4\Tests\Web\Admin;
 
 
 use Eccube\Common\Constant;
+use Eccube\Tests\Web\Admin\AbstractAdminWebTestCase;
 use Plugin\SocialLogin4\Tests\PluginTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ConfigControllerTest extends PluginTestCase
+class ConfigControllerTest extends AbstractAdminWebTestCase
 {
     public function setUp()
     {
@@ -34,7 +35,7 @@ class ConfigControllerTest extends PluginTestCase
 
     public function testAuth0情報を保存したらenvファイルに情報が追記されるか()
     {
-        $envFile = self::$testContainer->getParameter('kernel.project_dir') . '/.env';
+        $envFile = self::$container->getParameter('kernel.project_dir') . '/.env';
 
         $fs = new Filesystem();
         $fs->copy($envFile, $envFile . '.backup');
