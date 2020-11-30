@@ -87,6 +87,7 @@ jobs:
           cd ec-cube
           find app/Plugin/${{ github.event.repository.name }}/Tests -name "*Test.php" | while read TESTCASE
           do
+            echo app/Plugin/${{ github.event.repository.name }}/Tests/${TESTCASE}
             bin/phpunit --include-path vendor/kiy0taka/eccube4-test-fixer/src --loader 'Eccube\PHPUnit\Loader\Eccube4CompatTestSuiteLoader' app/Plugin/${{ github.event.repository.name }}/Tests/${TESTCASE}
           done
         env:
