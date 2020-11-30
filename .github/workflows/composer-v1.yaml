@@ -94,8 +94,8 @@ jobs:
           DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
-      - name: Run Tests for EC-CUBE4.1
-        if: matrix.eccube-versions == '4.1'
+      - name: Run Tests
+        if: matrix.eccube-versions != '4.0'
         run: |
           cd ec-cube
           bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
@@ -211,8 +211,8 @@ jobs:
           DATABASE_URL: postgres://postgres:password@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}
 
-      - name: Run Tests for EC-CUBE4.1
-        if: matrix.eccube-versions == '4.1'
+      - name: Run Tests
+        if: matrix.eccube-versions != '4.0'
         run: |
           cd ec-cube
           bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
