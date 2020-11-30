@@ -83,7 +83,7 @@ jobs:
           DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
       - name: Run Tests for EC-CUBE4.0
-        if: matrix.eccube-versions == '4.0
+        if: matrix.eccube-versions == '4.0'
         run: |
           cd ec-cube
           find app/Plugin/${{ github.event.repository.name }}/Tests -name "*Test.php" | while read TESTCASE
@@ -95,7 +95,7 @@ jobs:
           DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
       - name: Run Tests for EC-CUBE4.1
-        if: matrix.eccube-versions == '4.1
+        if: matrix.eccube-versions == '4.1'
         run: |
           cd ec-cube
           bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
@@ -200,7 +200,7 @@ jobs:
           DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}
 
       - name: Run Tests for EC-CUBE4.0
-        if: matrix.eccube-versions == '4.0
+        if: matrix.eccube-versions == '4.0'
         run: |
           cd ec-cube
           find app/Plugin/${{ github.event.repository.name }}/Tests -name "*Test.php" | while read TESTCASE
@@ -212,7 +212,7 @@ jobs:
           DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}
 
       - name: Run Tests for EC-CUBE4.1
-        if: matrix.eccube-versions == '4.1
+        if: matrix.eccube-versions == '4.1'
         run: |
           cd ec-cube
           bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
