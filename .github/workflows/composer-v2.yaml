@@ -44,7 +44,6 @@ jobs:
         run : |
           cd ec-cube
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-          composer require --dev kiy0taka/eccube4-test-fixer
 
       - name: Setup EC-CUBE
         run: |
@@ -148,7 +147,6 @@ jobs:
         run : |
           cd ec-cube
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-          composer require --dev kiy0taka/eccube4-test-fixer
 
       - name: Setup EC-CUBE
         run: |
