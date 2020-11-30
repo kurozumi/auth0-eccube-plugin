@@ -81,23 +81,13 @@ jobs:
           DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
-      - name: Run Tests for 4.0
-        if: matrix.eccube-versions == '4.0'
+      - name: Run Tests
         run: |
           cd ec-cube
           find app/Plugin/${{ github.event.repository.name }}/Tests -name "*Test.php" | while read TESTCASE
           do
             bin/phpunit --include-path vendor/kiy0taka/eccube4-test-fixer/src --loader 'Eccube\PHPUnit\Loader\Eccube4CompatTestSuiteLoader' app/Plugin/${{ github.event.repository.name }}/Tests/${TESTCASE}
           done
-        env:
-          DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
-          DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
-
-      - name: Run Tests for 4.1
-        if: matrix.eccube-versions == '4.1'
-        run: |
-          cd ec-cube
-          bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
         env:
           DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
@@ -198,23 +188,13 @@ jobs:
           DATABASE_URL: postgres://postgres:password@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}
 
-      - name: Run Tests for 4.0
-        if: matrix.eccube-versions == '4.0'
+      - name: Run Tests
         run: |
           cd ec-cube
           find app/Plugin/${{ github.event.repository.name }}/Tests -name "*Test.php" | while read TESTCASE
           do
             bin/phpunit --include-path vendor/kiy0taka/eccube4-test-fixer/src --loader 'Eccube\PHPUnit\Loader\Eccube4CompatTestSuiteLoader' app/Plugin/${{ github.event.repository.name }}/Tests/${TESTCASE}
           done
-        env:
-          DATABASE_URL: postgres://postgres:password@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/eccube_db
-          DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}
-
-      - name: Run Tests for 4.1
-        if: matrix.eccube-versions == '4.1'
-        run: |
-          cd ec-cube
-          bin/phpunit app/Plugin/${{ github.event.repository.name }}/Tests
         env:
           DATABASE_URL: postgres://postgres:password@127.0.0.1:${{ job.services.postgres.ports['5432'] }}/eccube_db
           DATABASE_SERVER_VERSION: ${{ matrix.postgres-versions }}

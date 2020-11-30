@@ -53,7 +53,7 @@ class Auth0AuthenticatorTest extends EccubeTestCase
         );
 
         $this->router = self::$container->get('router');
-        $this->session = self::$Container->get('session');
+        $this->session = self::$container->get('session');
 
     }
 
