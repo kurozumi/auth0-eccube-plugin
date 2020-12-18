@@ -45,17 +45,15 @@ jobs:
         run : |
           cd ec-cube
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-          
-      - name: Set env
-        env:
-          DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
-          DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
       - name: Setup EC-CUBE
         run: |
           cd ec-cube
           bin/console doctrine:schema:create
           bin/console eccube:fixtures:load
+        env:
+          DATABASE_URL: mysql://root:root@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/eccube_db
+          DATABASE_SERVER_VERSION: ${{ matrix.mysql-versions }}
 
       - name: Install Packages
         run: |
