@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [7.1,7.2,7.3]
+        php-versions: [7.1,7.2,7.3,7.4]
         mysql-versions: [5.5, 5.6, 5.7]
         eccube-versions: ['4.1']
     services:
@@ -31,6 +31,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
+          coverage: xdebug #optional
           tools: composer:v2
 
       - name: Install EC-CUBE
@@ -110,7 +111,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [7.1,7.2,7.3]
+        php-versions: [7.1,7.2,7.3,7.4]
         postgres-versions: [9.4, 10]
         eccube-versions: ['4.1']
     services:
@@ -134,6 +135,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, mysql, intl
+          coverage: xdebug #optional  
           tools: composer:v2
 
       - name: Install EC-CUBE
