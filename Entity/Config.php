@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="plg_social_login_config")
  * @ORM\Entity(repositoryClass="Plugin\SocialLogin4\Repository\ConfigRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Config
 {

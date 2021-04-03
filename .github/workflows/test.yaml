@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        eccube-versions: ['4.0', '4.1']
+        eccube-versions: ['4.0', '4.1-core']
         php-versions: [7.1,7.2,7.3,7.4]
         composer: ['v1', 'v2']
         database: [mysql, pgsql]
