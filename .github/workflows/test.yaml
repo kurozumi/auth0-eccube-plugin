@@ -86,6 +86,7 @@ jobs:
           composer require riskio/oauth2-auth0
 
       - name: Install Composer dependencies for EC-CUBE4.0
+        if: matrix.eccube-versions == '4.0'
         run : |
           composer require --dev kiy0taka/eccube4-test-fixer
 
