@@ -81,7 +81,6 @@ jobs:
       - name: Install Composer dependencies
         run : |
           composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-          composer require --dev kiy0taka/eccube4-test-fixer
           composer require knpuniversity/oauth2-client-bundle:1.34.0
           composer require riskio/oauth2-auth0
 
