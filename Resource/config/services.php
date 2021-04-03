@@ -10,7 +10,4 @@
  * file that was distributed with this source code.
  */
 
-
-return [
-    \KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true]
-];
+$container->registerExtension(new \Plugin\SocialLogin4\DependencyInjection\SocialLoginExtension());
