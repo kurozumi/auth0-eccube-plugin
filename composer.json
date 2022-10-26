@@ -1,11 +1,11 @@
 {
     "name": "ec-cube/sociallogin4",
-    "version": "2.0.0",
+    "version": "4.2.0",
     "description": "ソーシャルログインプラグイン for EC-CUBE4",
     "type": "eccube-plugin",
     "require": {
-        "ec-cube/plugin-installer": "~0.0.6 || ^2.0",
-        "knpuniversity/oauth2-client-bundle": "^1.34.0",
+        "ec-cube/plugin-installer": "^2.0",
+        "knpuniversity/oauth2-client-bundle": "*",
         "riskio/oauth2-auth0": "*",
         "auth0/auth0-php": "*"
     },

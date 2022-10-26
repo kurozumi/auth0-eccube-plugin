@@ -13,21 +13,16 @@
 namespace Plugin\SocialLogin4\Repository;
 
 
+use Doctrine\Persistence\ManagerRegistry;
 use Eccube\Repository\AbstractRepository;
 use Plugin\SocialLogin4\Entity\Connection;
-use Symfony\Bridge\Doctrine\RegistryInterface;
 
-/**
- * Class ConnectionRepository
- * @package Plugin\SocialLogin4\Repository
- */
 class ConnectionRepository extends AbstractRepository
 {
     /**
-     * ConnectionRepository constructor.
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Connection::class);
     }
