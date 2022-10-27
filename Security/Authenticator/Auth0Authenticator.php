@@ -79,7 +79,6 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        // TODO: Implement getCredentials() method.
         return $this->fetchAccessToken($this->getAuth0Client());
     }
 
@@ -130,8 +129,6 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
-        // TODO: Implement onAuthenticationFailure() method.
-
         // 会員登録していない場合
         if ($exception instanceof FinishRegistrationException) {
             $this->saveUserInfoToSession($request, $exception);
