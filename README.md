@@ -14,6 +14,7 @@
 ```
 bin/console eccube:composer:require knpuniversity/oauth2-client-bundle
 bin/console eccube:composer:require riskio/oauth2-auth0
+bin/console eccube:composer:require auth0/auth0-php
 
 git clone git@github.com:kurozumi/auth0-eccube-plugin.git app/Plugin/Auth0
 
