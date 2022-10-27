@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,10 +10,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Form\Extension;
+namespace Plugin\Auth0\Form\Extension;
 
 
-use Eccube\Entity\Customer;
 use Eccube\Form\Type\Front\EntryType;
 use Eccube\Form\Type\RepeatedEmailType;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;

@@ -3,7 +3,7 @@ on:
   release:
     types: [ published ]
 env:
-  PLUGIN_CODE: SocialLogin4
+  PLUGIN_CODE: Auth0
 jobs:
   deploy:
     name: Build

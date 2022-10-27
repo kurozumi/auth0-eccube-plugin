@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,12 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Tests\Web\Admin;
+namespace Plugin\Auth0\Tests\Web\Admin;
 
 
 use Eccube\Common\Constant;
 use Eccube\Tests\Web\Admin\AbstractAdminWebTestCase;
-use Plugin\SocialLogin4\Tests\PluginTestCase;
+use Plugin\Auth0\Tests\PluginTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ConfigControllerTest extends AbstractAdminWebTestCase

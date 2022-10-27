@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Security\Authenticator;
+namespace Plugin\Auth0\Security\Authenticator;
 
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +19,7 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
-use Plugin\SocialLogin4\Entity\Connection;
+use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

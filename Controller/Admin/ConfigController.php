@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -11,14 +11,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Controller\Admin;
+namespace Plugin\Auth0\Controller\Admin;
 
 use Eccube\Controller\AbstractController;
 use Eccube\Util\CacheUtil;
 use Eccube\Util\StringUtil;
-use Plugin\SocialLogin4\Entity\Config;
-use Plugin\SocialLogin4\Form\Type\Admin\ConfigType;
-use Plugin\SocialLogin4\Repository\ConfigRepository;
+use Plugin\Auth0\Entity\Config;
+use Plugin\Auth0\Form\Type\Admin\ConfigType;
+use Plugin\Auth0\Repository\ConfigRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,7 +42,7 @@ class ConfigController extends AbstractController
 
     /**
      * @Route("/%eccube_admin_route%/social_login/config", name="social_login_admin_config")
-     * @Template("@SocialLogin4/admin/config.twig")
+     * @Template("@Auth0/admin/config.twig")
      */
     public function index(Request $request, CacheUtil $cacheUtil)
     {

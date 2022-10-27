@@ -1,5 +1,5 @@
 {
-    "name": "ec-cube/sociallogin4",
+    "name": "ec-cube/auth0",
     "version": "4.2.0",
     "description": "ソーシャルログインプラグイン for EC-CUBE4",
     "type": "eccube-plugin",
@@ -10,6 +10,6 @@
         "auth0/auth0-php": "*"
     },
     "extra": {
-        "code": "SocialLogin4"
+        "code": "Auth0"
     }
 }

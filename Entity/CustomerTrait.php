@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Entity;
+namespace Plugin\Auth0\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,14 +19,14 @@ use Eccube\Annotation\EntityExtension;
 
 /**
  * Class CustomerTrait
- * @package Plugin\SocialLogin4\Entity
+ * @package Plugin\Auth0\Entity
  *
  * @EntityExtension("Eccube\Entity\Customer")
  */
 trait CustomerTrait
 {
     /**
-     * @ORM\OneToMany(targetEntity="Plugin\SocialLogin4\Entity\Connection", mappedBy="Customer")
+     * @ORM\OneToMany(targetEntity="Plugin\Auth0\Entity\Connection", mappedBy="Customer")
      */
     private $Connections;
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,12 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Repository;
+namespace Plugin\Auth0\Repository;
 
 
 use Doctrine\Persistence\ManagerRegistry;
 use Eccube\Repository\AbstractRepository;
-use Plugin\SocialLogin4\Entity\Connection;
+use Plugin\Auth0\Entity\Connection;
 
 class ConnectionRepository extends AbstractRepository
 {

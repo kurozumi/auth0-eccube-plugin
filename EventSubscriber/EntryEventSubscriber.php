@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\EventSubscriber;
+namespace Plugin\Auth0\EventSubscriber;
 
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +18,7 @@ use Eccube\Entity\Customer;
 use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
-use Plugin\SocialLogin4\Entity\Connection;
+use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 

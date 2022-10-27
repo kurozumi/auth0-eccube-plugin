@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,12 +10,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4;
+namespace Plugin\Auth0;
 
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Plugin\AbstractPluginManager;
-use Plugin\SocialLogin4\Entity\Config;
+use Plugin\Auth0\Entity\Config;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PluginManager extends AbstractPluginManager

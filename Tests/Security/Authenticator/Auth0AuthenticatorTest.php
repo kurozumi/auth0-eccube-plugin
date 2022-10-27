@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,14 +10,14 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Tests\Security\Authenticator;
+namespace Plugin\Auth0\Tests\Security\Authenticator;
 
 
 use Eccube\Entity\Customer;
 use Eccube\Tests\EccubeTestCase;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
-use Plugin\SocialLogin4\Security\Authenticator\Auth0Authenticator;
-use Plugin\SocialLogin4\Tests\PluginTestCase;
+use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
+use Plugin\Auth0\Tests\PluginTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;

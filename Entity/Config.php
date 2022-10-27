@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,7 +10,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Entity;
+namespace Plugin\Auth0\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Config
  *
  * @ORM\Table(name="plg_social_login_config")
- * @ORM\Entity(repositoryClass="Plugin\SocialLogin4\Repository\ConfigRepository")
+ * @ORM\Entity(repositoryClass="Plugin\Auth0\Repository\ConfigRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Config

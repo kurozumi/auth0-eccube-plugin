@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,13 +10,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\DependencyInjection;
+namespace Plugin\Auth0\DependencyInjection;
 
 
-use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Configuration as DoctrineBundleConfiguration;
-use Doctrine\DBAL\DriverManager;
 use Eccube\DependencyInjection\EccubeExtension;
-use Plugin\SocialLogin4\Security\Authenticator\Auth0Authenticator;
+use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class SocialLoginExtension extends EccubeExtension
@@ -35,7 +33,7 @@ class SocialLoginExtension extends EccubeExtension
     {
         $plugins = $container->getParameter('eccube.plugins.enabled');
 
-        if(!in_array('SocialLogin4', $plugins)) {
+        if(!in_array('Auth0', $plugins)) {
             return;
         }
 

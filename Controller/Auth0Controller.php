@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,18 +10,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Controller;
+namespace Plugin\Auth0\Controller;
 
 
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use Plugin\SocialLogin4\Repository\ConfigRepository;
+use Plugin\Auth0\Repository\ConfigRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class Auth0Controller
- * @package Plugin\SocialLogin4\Controller
+ * @package Plugin\Auth0\Controller
  *
  * @Route("/auth0")
  */

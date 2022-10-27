@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,17 +10,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Entity;
+namespace Plugin\Auth0\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class Connection
- * @package Plugin\SocialLogin4\Entity
+ * @package Plugin\Auth0\Entity
  *
  * @ORM\Table(name="plg_social_login_connection", uniqueConstraints={@ORM\UniqueConstraint(name="user_id", columns={"user_id", "customer_id"})})
- * @ORM\Entity(repositoryClass="Plugin\SocialLogin4\Repository\ConnectionRepository")
+ * @ORM\Entity(repositoryClass="Plugin\Auth0\Repository\ConnectionRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class Connection

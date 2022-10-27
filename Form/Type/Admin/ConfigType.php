@@ -1,6 +1,6 @@
 <?php
 /**
- * This file is part of SocialLogin4
+ * This file is part of Auth0
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
@@ -10,9 +10,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\SocialLogin4\Form\Type\Admin;
+namespace Plugin\Auth0\Form\Type\Admin;
 
-use Plugin\SocialLogin4\Entity\Config;
+use Plugin\Auth0\Entity\Config;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
