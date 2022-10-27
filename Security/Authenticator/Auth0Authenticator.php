@@ -68,7 +68,6 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        // TODO: Implement start() method.
         return new RedirectResponse(
             $this->router->generate("auth0_connect"),
             Response::HTTP_TEMPORARY_REDIRECT
@@ -89,7 +88,6 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        // TODO: Implement getUser() method.
         $user = $this->getAuth0Client()
             ->fetchUserFromToken($credentials);
 
@@ -149,8 +147,6 @@ class Auth0Authenticator extends SocialAuthenticator
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        // TODO: Implement onAuthenticationSuccess() method.
-
         $targetUrl = $this->router->generate('mypage');
 
         return new RedirectResponse($targetUrl);

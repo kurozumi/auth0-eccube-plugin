@@ -50,7 +50,6 @@ class EntryEventSubscriber implements EventSubscriberInterface
      */
     public static function getSubscribedEvents()
     {
-        // TODO: Implement getSubscribedEvents() method.
         return [
             EccubeEvents::FRONT_ENTRY_INDEX_COMPLETE => 'onFrontEntryIndexComplete'
         ];
