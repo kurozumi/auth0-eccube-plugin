@@ -48,9 +48,9 @@ class Auth0Authenticator extends SocialAuthenticator
     private $router;
 
     public function __construct(
-        ClientRegistry $clientRegistry,
+        ClientRegistry         $clientRegistry,
         EntityManagerInterface $entityManager,
-        RouterInterface $router
+        RouterInterface        $router
     )
     {
         $this->clientRegistry = $clientRegistry;
@@ -100,9 +100,7 @@ class Auth0Authenticator extends SocialAuthenticator
 
         // 連携済みの場合
         if ($Connection) {
-            $Customer = $this->entityManager->getRepository(Customer::class)
-                ->findOneBy(['id' => $Connection->getCustomerId()]);
-            return $Customer;
+            return $Connection->getCustomer();
         }
 
         /** @var Customer $Customer */
