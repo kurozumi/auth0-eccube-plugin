@@ -15,7 +15,7 @@
 bin/console eccube:composer:require knpuniversity/oauth2-client-bundle
 bin/console eccube:composer:require riskio/oauth2-auth0
 
-git clone git@github.com:kurozumi/auth0-eccube-plugin.git Auth0
+git clone git@github.com:kurozumi/auth0-eccube-plugin.git app/Plugin/Auth0
 
 bin/console eccube:plugin:install --code Auth0
 bin/console eccube:plugin:enable --code Auth0
