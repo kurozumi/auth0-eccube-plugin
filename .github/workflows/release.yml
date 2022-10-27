@@ -3,7 +3,7 @@ on:
   release:
     types: [ published ]
 env:
-  PLUGIN_CODE: SocialLogin42
+  PLUGIN_CODE: SocialLogin4
 jobs:
   deploy:
     name: Build

@@ -1,7 +1,7 @@
 name: PHPStan
 on: [workflow_dispatch, pull_request]
 env:
-  PLUGIN_CODE: SocialLogin42
+  PLUGIN_CODE: SocialLogin4
   PLUGIN_BRANCH: '4.2'
 jobs:
   phpstan:
@@ -43,6 +43,9 @@ jobs:
       - name: Install Composer dependencies
         run: |
           composer install --no-progress --prefer-dist --optimize-autoloader
+          composer require knpuniversity/oauth2-client-bundle
+          composer require riskio/oauth2-auth0
+          composer require auth0/auth0-php
 
       - name: Checkout
         uses: actions/checkout@v2
