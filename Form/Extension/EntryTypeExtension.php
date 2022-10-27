@@ -61,7 +61,6 @@ class EntryTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType()
     {
-        // TODO: Implement getExtendedType() method.
         return EntryType::class;
     }
 

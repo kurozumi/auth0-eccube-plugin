@@ -23,7 +23,6 @@ class Nav implements EccubeNav
      */
     public static function getNav()
     {
-        // TODO: Implement getNav() method.
         return [
             'plugin_social_login' => [
                 'name' => 'plguin.social_login.admin.config.title',
