@@ -14,6 +14,7 @@ namespace Plugin\Auth0\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
+use Eccube\Entity\Customer;
 
 /**
  * Class Connection
@@ -42,11 +43,12 @@ class Connection
     private $user_id;
 
     /**
-     * @var int
+     * @var Customer
      *
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="Eccube\Entity\Customer", inversedBy="Connections")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $customer_id;
+    private $Customer;
 
     /**
      * @return int
@@ -76,20 +78,20 @@ class Connection
     }
 
     /**
-     * @return int
+     * @return Customer
      */
-    public function getCustomerId(): int
+    public function getCustomer(): Customer
     {
-        return $this->customer_id;
+        return $this->Customer;
     }
 
     /**
-     * @param int $customer_id
+     * @param Customer $Customer
      * @return $this
      */
-    public function setCustomerId(int $customer_id): self
+    public function setCustomer(Customer $Customer): self
     {
-        $this->customer_id = $customer_id;
+        $this->Customer = $Customer;
 
         return $this;
     }

@@ -69,7 +69,7 @@ class EntryEventSubscriber implements EventSubscriberInterface
         if($userInfo) {
             $Connection = new Connection();
             $Connection->setUserId($userInfo['sub']);
-            $Connection->setCustomerId($Customer->getId());
+            $Connection->setCustomer($Customer);
             $this->entityManager->persist($Connection);
             $this->entityManager->flush();
 
