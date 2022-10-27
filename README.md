@@ -1,11 +1,9 @@
-# ソーシャルログインプラグイン for EC-CUBE4.0
+# ソーシャルログインプラグイン for EC-CUBE4.2
 
 ![Auth0ログインページ](https://github.com/kurozumi/auth0-eccube-plugin/blob/images/auth0-login-page.png)
 
-[Auth0](https://auth0.com/jp/) を使用してEC-CUBE4でソーシャルログインを実現するプラグイン（サンプル）です。  
-[Auth0](https://auth0.com/jp/) を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4にログインできるようになります。   
-
-本プラグインの利用には EC-CUBE 4.0.5 以上へのアップデートが必要になります。
+[Auth0](https://auth0.com/jp/) を使用して EC-CUBE4.2でソーシャルログインを実現するプラグイン（サンプル）です。  
+[Auth0](https://auth0.com/jp/) を使用するとGoogleやFacebook、Apple、Twitter、LineなどのアカウントでEC-CUBE4.2にログインできるようになります。   
 
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
 
@@ -14,10 +12,10 @@
 
 ## インストールと有効化
 ```
-bin/console eccube:composer:require knpuniversity/oauth2-client-bundle:1.34.0
+bin/console eccube:composer:require knpuniversity/oauth2-client-bundle
 bin/console eccube:composer:require riskio/oauth2-auth0
 
-git clone git@github.com:kurozumi/auth0-eccube-plugin.git
+git clone git@github.com:kurozumi/auth0-eccube-plugin.git Auth0
 
 bin/console eccube:plugin:install --code Auth0
 bin/console eccube:plugin:enable --code Auth0
