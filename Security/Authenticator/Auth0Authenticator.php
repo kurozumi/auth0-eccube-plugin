@@ -15,6 +15,7 @@ namespace Plugin\Auth0\Security\Authenticator;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
+use Eccube\Entity\Master\CustomerStatus;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
@@ -100,7 +101,13 @@ class Auth0Authenticator extends SocialAuthenticator
 
         // 連携済みの場合
         if ($Connection) {
-            return $Connection->getCustomer();
+            $Customer = $Connection->getCustomer();
+            // 本会員の場合、会員情報を返す
+            if ($Customer->getStatus()->getId() === CustomerStatus::REGULAR) {
+                return $Customer;
+            } else {
+                throw new AuthenticationException();
+            }
         }
 
         /** @var Customer $Customer */

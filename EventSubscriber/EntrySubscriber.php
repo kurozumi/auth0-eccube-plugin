@@ -22,7 +22,7 @@ use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class EntryEventSubscriber implements EventSubscriberInterface
+class EntrySubscriber implements EventSubscriberInterface
 {
     use FinishRegistrationBehavior;
 
