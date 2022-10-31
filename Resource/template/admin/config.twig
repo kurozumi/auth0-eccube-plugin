@@ -1,9 +1,9 @@
 {% extends '@admin/default_frame.twig' %}
 
-{% set menus = ['plugin_social_login', 'config'] %}
+{% set menus = ['customer', 'auth0_config'] %}
 
-{% block title %}{{ 'plguin.social_login.admin.config.title'|trans }}{% endblock %}
-{% block sub_title %}{{ 'plguin.social_login.admin.config.sub_title'|trans }}{% endblock %}
+{% block title %}{{ 'Auth0設定'|trans }}{% endblock %}
+{% block sub_title %}{{ 'admin.customer.customer_management'|trans }}{% endblock %}
 
 {% form_theme form '@admin/Form/bootstrap_4_horizontal_layout.html.twig' %}
 

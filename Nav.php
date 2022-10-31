@@ -24,11 +24,9 @@ class Nav implements EccubeNav
     public static function getNav()
     {
         return [
-            'plugin_social_login' => [
-                'name' => 'plguin.social_login.admin.config.title',
-                'icon' => 'fa-users',
+            'customer' => [
                 'children' => [
-                    'config' => [
+                    'auth0_config' => [
                         'name' => 'plguin.social_login.admin.setting.title',
                         'url' => 'social_login_admin_config'
                     ]
