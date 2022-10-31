@@ -45,7 +45,7 @@ class SocialLoginExtension extends EccubeExtension
         foreach($extensionConfigs["security"] as $key => $security) {
             if(isset($security["firewalls"])) {
                 $extensionConfigs["security"][$key]["firewalls"]["customer"]["entry_point"] = Auth0Authenticator::class;
-                $extensionConfigs["security"][$key]["firewalls"]["customer"]["guard"]["authenticators"][] = Auth0Authenticator::class;
+                $extensionConfigs["security"][$key]["firewalls"]["customer"]["custom_authenticators"][] = Auth0Authenticator::class;
             }
         }
 

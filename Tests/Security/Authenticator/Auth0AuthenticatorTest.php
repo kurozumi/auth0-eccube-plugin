@@ -17,6 +17,7 @@ use Eccube\Entity\Customer;
 use Eccube\Tests\EccubeTestCase;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
+use Plugin\Auth0\Security\Authenticator\OldAuth0Authenticator;
 use Plugin\Auth0\Tests\PluginTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -27,7 +28,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 class Auth0AuthenticatorTest extends EccubeTestCase
 {
     /**
-     * @var Auth0Authenticator
+     * @var OldAuth0Authenticator
      */
     protected $authenticator;
 
