@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0\Tests\Form\Admin;
-
 
 use Eccube\Tests\Form\Type\AbstractTypeTestCase;
 use Plugin\Auth0\Form\Type\Admin\ConfigType;
@@ -27,7 +27,7 @@ class ConfigTypeTest extends AbstractTypeTestCase
     protected $formData = [
         'client_id' => 'dummy',
         'client_secret' => 'dummy',
-        'custom_domain' => 'dummy'
+        'custom_domain' => 'dummy',
     ];
 
     protected function setUp(): void
@@ -36,7 +36,7 @@ class ConfigTypeTest extends AbstractTypeTestCase
 
         $this->form = $this->formFactory
             ->createBuilder(ConfigType::class, null, [
-                'csrf_protection' => false
+                'csrf_protection' => false,
             ])
             ->getForm();
     }

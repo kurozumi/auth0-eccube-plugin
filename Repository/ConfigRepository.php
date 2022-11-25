@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -29,7 +30,7 @@ class ConfigRepository extends AbstractRepository
     /**
      * @param int $id
      *
-     * @return null|Config
+     * @return Config|null
      */
     public function get($id = 1)
     {

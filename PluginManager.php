@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Plugin\AbstractPluginManager;
@@ -26,7 +26,7 @@ class PluginManager extends AbstractPluginManager
         $entityManager = $container->get('doctrine.orm.entity_manager');
 
         $Config = $entityManager->getRepository(Config::class)->get();
-        if(!$Config) {
+        if (!$Config) {
             $Config = new Config();
             $entityManager->persist($Config);
             $entityManager->flush();

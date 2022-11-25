@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -30,7 +31,7 @@ class DeleteSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            EccubeEvents::ADMIN_CUSTOMER_DELETE_COMPLETE => 'onAdminCustomerDeleteComplete'
+            EccubeEvents::ADMIN_CUSTOMER_DELETE_COMPLETE => 'onAdminCustomerDeleteComplete',
         ];
     }
 

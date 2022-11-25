@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -12,14 +13,12 @@
 
 namespace Plugin\Auth0;
 
-
 use Eccube\Common\EccubeNav;
 
 class Nav implements EccubeNav
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getNav()
     {
@@ -28,10 +27,10 @@ class Nav implements EccubeNav
                 'children' => [
                     'auth0_config' => [
                         'name' => 'plguin.social_login.admin.setting.title',
-                        'url' => 'social_login_admin_config'
-                    ]
-                ]
-            ]
+                        'url' => 'social_login_admin_config',
+                    ],
+                ],
+            ],
         ];
     }
 }

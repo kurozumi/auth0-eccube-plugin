@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -12,7 +13,6 @@
 
 namespace Plugin\Auth0\Controller;
 
-
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Plugin\Auth0\Repository\ConfigRepository;
@@ -21,7 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class Auth0Controller
- * @package Plugin\Auth0\Controller
  *
  * @Route("/auth0")
  */
@@ -29,6 +28,7 @@ class Auth0Controller extends AbstractController
 {
     /**
      * @param ClientRegistry $clientRegistry
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/connect", name="auth0_connect")

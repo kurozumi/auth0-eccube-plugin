@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0\Form\Extension;
-
 
 use Eccube\Form\Type\Front\EntryType;
 use Eccube\Form\Type\RepeatedEmailType;
@@ -33,8 +33,7 @@ class EntryTypeExtension extends AbstractTypeExtension
 
     public function __construct(
         RequestStack $requestStack
-    )
-    {
+    ) {
         $this->requestStack = $requestStack;
     }
 
@@ -44,7 +43,7 @@ class EntryTypeExtension extends AbstractTypeExtension
         if ($userInfo) {
             $builder
                 ->add('email', RepeatedEmailType::class, [
-                    'attr' => ["readonly" => "readonly"]
+                    'attr' => ['readonly' => 'readonly'],
                 ]);
 
             // メールアドレスをセット
@@ -57,7 +56,7 @@ class EntryTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getExtendedType()
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0\Repository;
-
 
 use Doctrine\Persistence\ManagerRegistry;
 use Eccube\Repository\AbstractRepository;

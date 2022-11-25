@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0\EventSubscriber;
-
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
@@ -39,26 +39,25 @@ class EntrySubscriber implements EventSubscriberInterface
     public function __construct(
         SessionInterface $session,
         EntityManagerInterface $entityManager
-    )
-    {
+    ) {
         $this->session = $session;
         $this->entityManager = $entityManager;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public static function getSubscribedEvents()
     {
         return [
-            EccubeEvents::FRONT_ENTRY_INDEX_COMPLETE => 'onFrontEntryIndexComplete'
+            EccubeEvents::FRONT_ENTRY_INDEX_COMPLETE => 'onFrontEntryIndexComplete',
         ];
     }
 
     public function onFrontEntryIndexComplete(EventArgs $args)
     {
         $request = $args->getRequest();
-        if(null === $request) {
+        if (null === $request) {
             return;
         }
 
@@ -66,7 +65,7 @@ class EntrySubscriber implements EventSubscriberInterface
         $Customer = $args->getArgument('Customer');
 
         $userInfo = $this->getUserInfoFromSession($request);
-        if($userInfo) {
+        if ($userInfo) {
             $Connection = new Connection();
             $Connection->setUserId($userInfo['sub']);
             $Connection->setCustomer($Customer);
