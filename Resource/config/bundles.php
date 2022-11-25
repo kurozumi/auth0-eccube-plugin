@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -10,7 +11,6 @@
  * file that was distributed with this source code.
  */
 
-
 return [
-    \KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true]
+    \KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
 ];

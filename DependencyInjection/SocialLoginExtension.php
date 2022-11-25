@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -12,7 +13,6 @@
 
 namespace Plugin\Auth0\DependencyInjection;
 
-
 use Eccube\DependencyInjection\EccubeExtension;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,20 +20,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class SocialLoginExtension extends EccubeExtension
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function prepend(ContainerBuilder $container)
     {
         $plugins = $container->getParameter('eccube.plugins.enabled');
 
-        if(!in_array('Auth0', $plugins)) {
+        if (!in_array('Auth0', $plugins)) {
             return;
         }
 
@@ -42,10 +42,10 @@ class SocialLoginExtension extends EccubeExtension
         $extensionConfigsRefl->setAccessible(true);
         $extensionConfigs = $extensionConfigsRefl->getValue($container);
 
-        foreach($extensionConfigs["security"] as $key => $security) {
-            if(isset($security["firewalls"])) {
-                $extensionConfigs["security"][$key]["firewalls"]["customer"]["entry_point"] = Auth0Authenticator::class;
-                $extensionConfigs["security"][$key]["firewalls"]["customer"]["custom_authenticators"][] = Auth0Authenticator::class;
+        foreach ($extensionConfigs['security'] as $key => $security) {
+            if (isset($security['firewalls'])) {
+                $extensionConfigs['security'][$key]['firewalls']['customer']['entry_point'] = Auth0Authenticator::class;
+                $extensionConfigs['security'][$key]['firewalls']['customer']['custom_authenticators'][] = Auth0Authenticator::class;
             }
         }
 

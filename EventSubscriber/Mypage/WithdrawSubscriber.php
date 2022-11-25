@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -27,11 +28,10 @@ class WithdrawSubscriber implements EventSubscriberInterface
         $this->entityManager = $entityManager;
     }
 
-
     public static function getSubscribedEvents()
     {
         return [
-            EccubeEvents::FRONT_MYPAGE_WITHDRAW_INDEX_COMPLETE => 'onFrontMyPageWithdrawIndexComplete'
+            EccubeEvents::FRONT_MYPAGE_WITHDRAW_INDEX_COMPLETE => 'onFrontMyPageWithdrawIndexComplete',
         ];
     }
 

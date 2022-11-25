@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -12,13 +13,9 @@
 
 namespace Plugin\Auth0\Tests\Security\Authenticator;
 
-
-use Eccube\Entity\Customer;
 use Eccube\Tests\EccubeTestCase;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
-use Plugin\Auth0\Security\Authenticator\OldAuth0Authenticator;
-use Plugin\Auth0\Tests\PluginTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -28,7 +25,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 class Auth0AuthenticatorTest extends EccubeTestCase
 {
     /**
-     * @var OldAuth0Authenticator
+     * @var Auth0Authenticator
      */
     protected $authenticator;
 
@@ -54,7 +51,6 @@ class Auth0AuthenticatorTest extends EccubeTestCase
 
         $this->router = static::getContainer()->get('router');
         $this->session = static::getContainer()->get('session');
-
     }
 
     public function testStart()
@@ -63,18 +59,7 @@ class Auth0AuthenticatorTest extends EccubeTestCase
         self::assertTrue($response->isRedirect($this->router->generate('auth0_connect')));
     }
 
-    public function testCheckCredentials()
-    {
-        $customer = new Customer();
-        self::assertEquals(true, $this->authenticator->checkCredentials('', $customer));
-    }
-
-    public function testSupportsRememberMe()
-    {
-        self::assertEquals(true, $this->authenticator->supportsRememberMe());
-    }
-
-    public function testOnAuthenticationFailure_FinishRegistrationException()
+    public function testOnAuthenticationFailureFinishRegistrationException()
     {
         $request = new Request();
         $request->setSession($this->session);
@@ -83,7 +68,7 @@ class Auth0AuthenticatorTest extends EccubeTestCase
         self::assertTrue($response->isRedirect($this->router->generate('entry')));
     }
 
-    public function testOnAuthenticationFailure_AuthenticationException()
+    public function testOnAuthenticationFailureAuthenticationException()
     {
         $request = new Request();
         $request->setSession($this->session);
@@ -98,12 +83,5 @@ class Auth0AuthenticatorTest extends EccubeTestCase
         $token = new UsernamePasswordToken($Customer, 'customer', ['ROLE_USER']);
         $response = $this->authenticator->onAuthenticationSuccess(new Request(), $token, 'customer');
         self::assertTrue($response->isRedirect($this->router->generate('mypage')));
-    }
-
-    public function testCreateAuthenticatedToken_customerToken()
-    {
-        $Customer = $this->createCustomer();
-        $token = $this->authenticator->createAuthenticatedToken($Customer, 'customer');
-        self::assertInstanceOf(UsernamePasswordToken::class, $token);
     }
 }

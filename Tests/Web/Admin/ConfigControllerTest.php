@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -12,10 +13,8 @@
 
 namespace Plugin\Auth0\Tests\Web\Admin;
 
-
 use Eccube\Common\Constant;
 use Eccube\Tests\Web\Admin\AbstractAdminWebTestCase;
-use Plugin\Auth0\Tests\PluginTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 class ConfigControllerTest extends AbstractAdminWebTestCase
@@ -30,18 +29,18 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
 
     public function testAuth0情報を保存したらenvファイルに情報が追記されるか()
     {
-        $envFile = static::getContainer()->getParameter('kernel.project_dir') . '/.env';
+        $envFile = static::getContainer()->getParameter('kernel.project_dir').'/.env';
 
         $fs = new Filesystem();
-        $fs->copy($envFile, $envFile . '.backup');
+        $fs->copy($envFile, $envFile.'.backup');
 
         $this->client->request('POST', $this->generateUrl('social_login_admin_config'), [
             'config' => [
                 'client_id' => 'dummy',
                 'client_secret' => 'dummy',
                 'custom_domain' => 'dummy',
-                Constant::TOKEN_NAME => 'dummy'
-            ]
+                Constant::TOKEN_NAME => 'dummy',
+            ],
         ]);
 
         $env = file_get_contents($envFile);
@@ -49,19 +48,19 @@ class ConfigControllerTest extends AbstractAdminWebTestCase
         $keys = [
             'OAUTH_AUTH0_CLIENT_ID',
             'OAUTH_AUTH0_CLIENT_SECRET',
-            'OAUTH_AUTH0_CUSTOM_DOMAIN'
+            'OAUTH_AUTH0_CUSTOM_DOMAIN',
         ];
 
         foreach ($keys as $key) {
-            $pattern = '/^(' . $key . ')=(.*)/m';
+            $pattern = '/^('.$key.')=(.*)/m';
             if (preg_match($pattern, $env, $matches)) {
                 self::assertEquals('dummy', $matches[2]);
             } else {
-                self::fail(sprintf("%sが見つかりませんでした。", $key));
+                self::fail(sprintf('%sが見つかりませんでした。', $key));
             }
         }
 
         // envファイルを戻す
-        $fs->rename($envFile . '.backup', $envFile, true);
+        $fs->rename($envFile.'.backup', $envFile, true);
     }
 }

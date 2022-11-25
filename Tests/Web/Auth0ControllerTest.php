@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -11,7 +12,6 @@
  */
 
 namespace Plugin\Auth0\Tests\Web;
-
 
 use Eccube\Tests\Web\AbstractWebTestCase;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -71,6 +72,7 @@ class Config
 
     /**
      * @param string $client_id
+     *
      * @return $this
      */
     public function setClientId(string $client_id): self
@@ -90,6 +92,7 @@ class Config
 
     /**
      * @param string $client_secret
+     *
      * @return $this
      */
     public function setClientSecret(string $client_secret): self
@@ -109,6 +112,7 @@ class Config
 
     /**
      * @param string $custom_domain
+     *
      * @return $this
      */
     public function setCustomDomain(string $custom_domain): self

@@ -63,7 +63,7 @@ class ConfigController extends AbstractController
                 'OAUTH_AUTH0_CLIENT_ID' => $Config->getClientId(),
                 'OAUTH_AUTH0_CLIENT_SECRET' => $Config->getClientSecret(),
                 'OAUTH_AUTH0_CUSTOM_DOMAIN' => $Config->getCustomDomain(),
-                'OAUTH_AUTH0_COOKIE_SECRET' => shell_exec('openssl rand -hex 32')
+                'OAUTH_AUTH0_COOKIE_SECRET' => shell_exec('openssl rand -hex 32'),
             ]);
 
             file_put_contents($envFile, $env);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of Auth0
  *
@@ -19,7 +20,6 @@ use Eccube\Annotation\EntityExtension;
 
 /**
  * Class CustomerTrait
- * @package Plugin\Auth0\Entity
  *
  * @EntityExtension("Eccube\Entity\Customer")
  */
@@ -35,7 +35,7 @@ trait CustomerTrait
      */
     public function getConnections(): Collection
     {
-        if(null === $this->Connections) {
+        if (null === $this->Connections) {
             $this->Connections = new ArrayCollection();
         }
 
@@ -44,15 +44,16 @@ trait CustomerTrait
 
     /**
      * @param Connection $connection
+     *
      * @return $this
      */
     public function addConnection(Connection $connection): self
     {
-        if(null === $this->Connections) {
+        if (null === $this->Connections) {
             $this->Connections = new ArrayCollection();
         }
 
-        if(false === $this->Connections->contains($connection)) {
+        if (false === $this->Connections->contains($connection)) {
             $this->Connections->add($connection);
             $connection->setCustomer($this);
         }
@@ -62,17 +63,18 @@ trait CustomerTrait
 
     /**
      * @param Connection $connection
+     *
      * @return $this
      */
     public function removeConnection(Connection $connection): self
     {
-        if(null === $this->Connections) {
+        if (null === $this->Connections) {
             $this->Connections = new ArrayCollection();
         }
 
-        if($this->Connections->contains($connection)) {
+        if ($this->Connections->contains($connection)) {
             $this->Connections->removeElement($connection);
-            if($connection->getCustomer() === $this) {
+            if ($connection->getCustomer() === $this) {
                 $connection->setCustomer(null);
             }
         }

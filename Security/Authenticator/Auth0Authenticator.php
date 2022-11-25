@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * This file is part of Auth0
+ *
+ * Copyright(c) Akira Kurozumi <info@a-zumi.net>
+ *
+ *  https://a-zumi.net
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Plugin\Auth0\Security\Authenticator;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -37,12 +48,10 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
     private $router;
 
     public function __construct(
-        ClientRegistry         $clientRegistry,
+        ClientRegistry $clientRegistry,
         EntityManagerInterface $entityManager,
-        RouterInterface        $router
-    )
-    {
-
+        RouterInterface $router
+    ) {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
         $this->router = $router;
@@ -100,7 +109,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
 
                 // 会員登録済みの場合はユーザー識別子を保存
                 $Connection = new Connection();
-                $Connection->setUserId($user->toArray()["sub"]);
+                $Connection->setUserId($user->toArray()['sub']);
                 $Connection->setCustomer($Customer->getId());
                 $this->entityManager->persist($Connection);
                 $this->entityManager->flush();
@@ -121,9 +130,11 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
     {
         if ($exception instanceof FinishRegistrationException) {
             $this->saveUserInfoToSession($request, $exception);
+
             return new RedirectResponse($this->router->generate('entry'));
         } else {
             $this->saveAuthenticationErrorToSession($request, $exception);
+
             return new RedirectResponse($this->router->generate('mypage_login'));
         }
     }
