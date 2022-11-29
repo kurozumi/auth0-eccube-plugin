@@ -46,7 +46,8 @@ class Auth0AuthenticatorTest extends EccubeTestCase
         $this->authenticator = new Auth0Authenticator(
             static::getContainer()->get('knpu.oauth2.registry'),
             static::getContainer()->get('doctrine.orm.default_entity_manager'),
-            static::getContainer()->get('router')
+            static::getContainer()->get('router'),
+            static::getContainer()->get('session')
         );
 
         $this->router = static::getContainer()->get('router');
