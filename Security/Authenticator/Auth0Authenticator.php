@@ -23,6 +23,7 @@ use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -47,14 +48,21 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
      */
     private $router;
 
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
     public function __construct(
         ClientRegistry $clientRegistry,
         EntityManagerInterface $entityManager,
-        RouterInterface $router
+        RouterInterface $router,
+        SessionInterface $session
     ) {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
         $this->router = $router;
+        $this->session = $session;
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
@@ -74,6 +82,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
     {
         $client = $this->clientRegistry->getClient('auth0');
         $accessToken = $this->fetchAccessToken($client);
+        $this->session->set('access_token', $accessToken);
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
@@ -110,7 +119,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
                 // 会員登録済みの場合はユーザー識別子を保存
                 $Connection = new Connection();
                 $Connection->setUserId($user->toArray()['sub']);
-                $Connection->setCustomer($Customer->getId());
+                $Connection->setCustomer($Customer);
                 $this->entityManager->persist($Connection);
                 $this->entityManager->flush();
 
@@ -134,6 +143,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
             return new RedirectResponse($this->router->generate('entry'));
         } else {
             $this->saveAuthenticationErrorToSession($request, $exception);
+            $this->session->remove('access_token');
 
             return new RedirectResponse($this->router->generate('mypage_login'));
         }
