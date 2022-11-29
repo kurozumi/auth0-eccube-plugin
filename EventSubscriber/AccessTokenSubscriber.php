@@ -39,11 +39,10 @@ class AccessTokenSubscriber implements EventSubscriberInterface
     private $session;
 
     public function __construct(
-        Context          $requestContext,
-        ClientRegistry   $clientRegistry,
+        Context $requestContext,
+        ClientRegistry $clientRegistry,
         SessionInterface $session
-    )
-    {
+    ) {
         $this->requestContext = $requestContext;
         $this->clientRegistry = $clientRegistry;
         $this->session = $session;
@@ -75,7 +74,7 @@ class AccessTokenSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => 'onKernelRequest'
+            KernelEvents::REQUEST => 'onKernelRequest',
         ];
     }
 }
