@@ -20,20 +20,18 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class Auth0Controller
- *
  * @Route("/auth0")
  */
 class Auth0Controller extends AbstractController
 {
     /**
      * @param ClientRegistry $clientRegistry
-     *
+     * @param ConfigRepository $configRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @Route("/connect", name="auth0_connect")
      */
-    public function index(ClientRegistry $clientRegistry, ConfigRepository $configRepository)
+    public function connect(ClientRegistry $clientRegistry, ConfigRepository $configRepository)
     {
         $Config = $configRepository->get();
         if (!$Config) {
@@ -50,16 +48,11 @@ class Auth0Controller extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return void
      *
-     * @Route("/callback", name="auth0_callback")
+     * @Route("/connect/callback", name="auth0_connect_callback")
      */
     public function callback()
     {
-        if ($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->redirectToRoute('mypage');
-        } else {
-            return $this->redirectToRoute('auth0_connect');
-        }
     }
 }
