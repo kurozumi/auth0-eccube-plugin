@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\Auth0\EventSubscriber;
+namespace Plugin\Auth0\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
@@ -22,7 +22,7 @@ use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class EntrySubscriber implements EventSubscriberInterface
+class EntryListener implements EventSubscriberInterface
 {
     use FinishRegistrationBehavior;
 
