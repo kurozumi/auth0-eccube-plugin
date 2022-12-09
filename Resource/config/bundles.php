@@ -13,4 +13,5 @@
 
 return [
     \KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle::class => ['all' => true],
+    \Plugin\Auth0\Bundle\Auth0Bundle::class => ['all' => true],
 ];

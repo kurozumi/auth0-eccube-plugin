@@ -10,7 +10,7 @@ knpu_oauth2_client:
       client_id: '%env(OAUTH_AUTH0_CLIENT_ID)%'
       client_secret: '%env(OAUTH_AUTH0_CLIENT_SECRET)%'
       # a route name you'll create
-      redirect_route: auth0_callback
+      redirect_route: auth0_connect_callback
       redirect_params: {}
       # Your custom/definite Auth0 domain, e.g. "login.mycompany.com". Set this if you use Auth0's Custom Domain feature. The "account" and "region" parameters will be ignored in this case.
       custom_domain: '%env(OAUTH_AUTH0_CUSTOM_DOMAIN)%'

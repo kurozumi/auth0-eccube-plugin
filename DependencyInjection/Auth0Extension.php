@@ -13,21 +13,27 @@
 
 namespace Plugin\Auth0\DependencyInjection;
 
-use Eccube\DependencyInjection\EccubeExtension;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
-class SocialLoginExtension extends EccubeExtension
+class Auth0Extension extends Extension implements PrependExtensionInterface
 {
     /**
-     * {@inheritDoc}
+     * @param array $configs
+     * @param ContainerBuilder $container
+     *
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * @param ContainerBuilder $container
+     *
+     * @return void
      */
     public function prepend(ContainerBuilder $container)
     {
