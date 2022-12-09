@@ -75,7 +75,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
 
     public function supports(Request $request): ?bool
     {
-        return $request->attributes->get('_route') === 'auth0_callback';
+        return $request->attributes->get('_route') === 'auth0_connect_callback';
     }
 
     public function authenticate(Request $request)
