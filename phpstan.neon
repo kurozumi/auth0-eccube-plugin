@@ -1,4 +1,2 @@
 parameters:
   level: 1
-  ignoreErrors:
-    - '#Variable \$container might not be defined\.#'
