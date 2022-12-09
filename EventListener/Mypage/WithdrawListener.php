@@ -11,7 +11,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\Auth0\EventSubscriber\Mypage;
+namespace Plugin\Auth0\EventListener\Mypage;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
@@ -19,7 +19,7 @@ use Eccube\Event\EccubeEvents;
 use Eccube\Event\EventArgs;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class WithdrawSubscriber implements EventSubscriberInterface
+class WithdrawListener implements EventSubscriberInterface
 {
     private $entityManager;
 

@@ -11,23 +11,17 @@
  * file that was distributed with this source code.
  */
 
-namespace Plugin\Auth0\EventSubscriber;
+namespace Plugin\Auth0\EventListener;
 
-use Eccube\Request\Context;
+use Eccube\Entity\Customer;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
-class AccessTokenSubscriber implements EventSubscriberInterface
+class LoginListener implements EventSubscriberInterface
 {
-    /**
-     * @var Context
-     */
-    private $requestContext;
-
     /**
      * @var ClientRegistry
      */
@@ -39,22 +33,18 @@ class AccessTokenSubscriber implements EventSubscriberInterface
     private $session;
 
     public function __construct(
-        Context $requestContext,
-        ClientRegistry $clientRegistry,
+        ClientRegistry   $clientRegistry,
         SessionInterface $session
-    ) {
-        $this->requestContext = $requestContext;
+    )
+    {
         $this->clientRegistry = $clientRegistry;
         $this->session = $session;
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onLoginSuccess(LoginSuccessEvent $event): void
     {
-        if (false === $event->isMainRequest()) {
-            return;
-        }
-
-        if (false === $this->requestContext->isFront()) {
+        $token = $event->getAuthenticatedToken();
+        if (!$token instanceof Customer) {
             return;
         }
 
@@ -74,7 +64,7 @@ class AccessTokenSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => 'onKernelRequest',
+            LoginSuccessEvent::class => 'onLoginSuccess',
         ];
     }
 }

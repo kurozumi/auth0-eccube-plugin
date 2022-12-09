@@ -143,7 +143,6 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
             return new RedirectResponse($this->router->generate('entry'));
         } else {
             $this->saveAuthenticationErrorToSession($request, $exception);
-            $this->session->remove('access_token');
 
             return new RedirectResponse($this->router->generate('mypage_login'));
         }
