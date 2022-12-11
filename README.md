@@ -8,7 +8,11 @@
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
 
 ## Auth0の設定例
-![Auth0](https://github.com/kurozumi/auth0-eccube-plugin/blob/images/auth0-setting-sample.png)
+
+Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のURLを設定してください。
+
+![FireShot Capture 452 - Application Details - manage auth0 com](https://user-images.githubusercontent.com/1731851/206898004-bb9b2c7d-51d4-4308-80b8-5c59b6aeeedc.png)
+
 
 ## インストールと有効化
 ```
