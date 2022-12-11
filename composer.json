@@ -1,6 +1,6 @@
 {
     "name": "ec-cube/auth0",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "description": "Auth0(ソーシャルログイン)プラグイン for EC-CUBE4",
     "type": "eccube-plugin",
     "require": {
