@@ -26,9 +26,9 @@ services:
     class: Auth0\SDK\Configuration\SdkConfiguration
     public: true
     arguments:
-      - domain: '%env(OAUTH_AUTH0_CLIENT_ID)%'
-        clientId: '%env(OAUTH_AUTH0_CLIENT_SECRET)%'
-        clientSecret: '%env(OAUTH_AUTH0_CUSTOM_DOMAIN)%'
+      - domain: '%env(OAUTH_AUTH0_CUSTOM_DOMAIN)%'
+        clientId: '%env(OAUTH_AUTH0_CLIENT_ID)%'
+        clientSecret: '%env(OAUTH_AUTH0_CLIENT_SECRET)%'
         cookieSecret: '%env(OAUTH_AUTH0_COOKIE_SECRET)%'
 
   Auth0\SDK\Auth0:
