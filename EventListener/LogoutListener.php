@@ -15,10 +15,14 @@ namespace Plugin\Auth0\EventListener;
 
 use Auth0\SDK\Auth0;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 
+/**
+ * Auth0でログインしている状態でログアウトした場合、Auth0からもログアウトするイベント
+ */
 class LogoutListener implements EventSubscriberInterface
 {
     /**
@@ -27,29 +31,30 @@ class LogoutListener implements EventSubscriberInterface
     private $auth0;
 
     /**
-     * @var SessionInterface
+     * @var RouterInterface
      */
-    private $session;
+    private $router;
 
-    public function __construct(Auth0 $auth0, SessionInterface $session)
+    public function __construct(Auth0 $auth0, RouterInterface $router)
     {
         $this->auth0 = $auth0;
-        $this->session = $session;
+        $this->router = $router;
     }
 
     public static function getSubscribedEvents(): array
     {
         return [
-            LogoutEvent::class => ['onLogout', 0],
+            LogoutEvent::class => ['onLogout'],
         ];
     }
 
     public function onLogout(LogoutEvent $event): void
     {
-        if (!$response = $event->getResponse()) {
+        if (null === $event->getResponse()) {
             return;
         }
 
-        // TODO: ログアウト時にAuth0側のログアウト処理の実装が必要
+        $logoutUrl = $this->auth0->logout($this->router->generate('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL));
+        $event->setResponse(new RedirectResponse($logoutUrl));
     }
 }
