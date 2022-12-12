@@ -5,7 +5,7 @@
 [Auth0](https://auth0.com/jp/) を使用して EC-CUBE4.2でソーシャルログインを実現するプラグイン（サンプル）です。  
 [Auth0](https://auth0.com/jp/) を使用するとGoogleやFacebook、Apple、LineなどのアカウントでEC-CUBE4.2にログインできるようになります。　　
 
-### ご注意
+#### ご注意!
 メールアドレスが取得できるサービスのみ利用可能です。
 
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
@@ -14,7 +14,7 @@
 
 Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のURLを設定してください。
 
-### ご注意！
+#### ご注意！
 
 Auth0 を使用すると、Auth0 開発者キーを使用して、各ソーシャルプロバイダー独自のClient ID と Client Secret を指定せずにソーシャルプロバイダーをテストできます。  
 これにより、特定のソーシャルプロバイダーをすばやく有効にしてテストできますが、本番環境では使用しないでください。
