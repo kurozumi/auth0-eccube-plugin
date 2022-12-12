@@ -16,14 +16,25 @@ Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のU
 
 ![FireShot Capture 452 - Application Details - manage auth0 com](https://user-images.githubusercontent.com/1731851/206898004-bb9b2c7d-51d4-4308-80b8-5c59b6aeeedc.png)
 
-## 各ソーシャルプロバイダー独自のClientIDとClientSecretをAuth0に登録
+## ソーシャルプロバイダーのClientIDとClientSecretをAuth0に登録
 
 ### ご注意！
-Auth0のClientIDとClientSecretを使用すれば、各ソーシャルプロバイダー独自のClientIDとClientSecretを登録せずにソーシャルプロバイダーをテストできます。
+Auth0のClientIDとClientSecretを使用すれば、ソーシャルプロバイダーのClientIDとClientSecretを登録せずにソーシャルログインのテストができます。  
 本番環境では必ず各ソーシャルプロバイダー独自のClientIDとClientSecretをAuth0に登録してください。
 
-- [GitHubアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/22)
+### ソーシャルプロバイダーのClientIDとClientSecretの発行方法
 
+ソーシャルプロバイダーに登録するウェブサイトURLとコールバックURLはAuth0で発行されたURLを登録してください。  
+ウェブサイトURL例：https://a-zumi.us.auth0.com  
+コールバックURL例：https://a-zumi.us.auth0.com/login/callback
+
+### ソーシャルプロバイダーのClientIDとClientSecretをAuth0に登録
+
+発行されたソーシャルプロバイダーのClientIDとClientSecretをAuth0に登録してください。
+
+### 設定例
+
+- [GitHubアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/22)
 
 ## インストールと有効化
 ```
