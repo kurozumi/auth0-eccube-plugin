@@ -14,12 +14,15 @@
 
 Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のURLを設定してください。
 
-#### ご注意！
-
-Auth0 を使用すると、Auth0 開発者キーを使用して、各ソーシャルプロバイダー独自のClient ID と Client Secret を指定せずにソーシャルプロバイダーをテストできます。  
-これにより、特定のソーシャルプロバイダーをすばやく有効にしてテストできますが、本番環境では使用しないでください。
-
 ![FireShot Capture 452 - Application Details - manage auth0 com](https://user-images.githubusercontent.com/1731851/206898004-bb9b2c7d-51d4-4308-80b8-5c59b6aeeedc.png)
+
+## 各ソーシャルプロバイダー独自のClientIDとClientSecretをAuth0に登録
+
+### ご注意！
+Auth0のClientIDとClientSecretを使用すれば、各ソーシャルプロバイダー独自のClientIDとClientSecretを登録せずにソーシャルプロバイダーをテストできます。
+本番環境では必ず各ソーシャルプロバイダー独自のClientIDとClientSecretをAuth0に登録してください。
+
+- [GitHubアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/22)
 
 
 ## インストールと有効化
@@ -35,7 +38,7 @@ bin/console eccube:plugin:enable --code Auth0
 ```
 
 
-## ClientIdとClientSecret、Domainを設定
+## Auth0で発行されたClientIDとClientSecret、DomainをEC-CUBEに登録
 
 [Auth0](https://auth0.com/jp/) でClientIdとClientSecret、Domainを取得して、管理画面で設定してください。
 
