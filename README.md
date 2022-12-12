@@ -11,6 +11,11 @@
 
 Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のURLを設定してください。
 
+### ご注意！
+
+Auth0 を使用すると、Auth0 開発者キーを使用して、各ソーシャルプロバイダー独自のClient ID と Client Secret を指定せずにソーシャルプロバイダーをテストできます。  
+これにより、特定のソーシャルプロバイダーをすばやく有効にしてテストできますが、本番環境では使用しないでください。
+
 ![FireShot Capture 452 - Application Details - manage auth0 com](https://user-images.githubusercontent.com/1731851/206898004-bb9b2c7d-51d4-4308-80b8-5c59b6aeeedc.png)
 
 
