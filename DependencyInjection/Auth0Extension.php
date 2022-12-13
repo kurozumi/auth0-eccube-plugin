@@ -37,12 +37,6 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container)
     {
-        $plugins = $container->getParameter('eccube.plugins.enabled');
-
-        if (!in_array('Auth0', $plugins)) {
-            return;
-        }
-
         // セキュリティ設定にAuth0Authenticator追加
         $extensionConfigsRefl = new \ReflectionProperty(ContainerBuilder::class, 'extensionConfigs');
         $extensionConfigsRefl->setAccessible(true);
