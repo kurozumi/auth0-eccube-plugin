@@ -1,4 +1,4 @@
-# ソーシャルログインプラグイン for EC-CUBE4.2
+# Auth0(ソーシャルログイン)プラグイン for EC-CUBE4.2
 
 ![Auth0ログインページ](https://github.com/kurozumi/auth0-eccube-plugin/blob/images/auth0-login-page.png)
 
