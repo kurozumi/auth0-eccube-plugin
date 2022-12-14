@@ -68,7 +68,7 @@ bin/console eccube:plugin:enable --code Auth0
 
 ## 利用可能なソーシャルログイン一覧
 
-![利用可能なソーシャルログイン一覧](https://github.com/kurozumi/auth0-eccube-plugin/blob/images/social_connections.png)
+![利用可能なソーシャルログイン一覧](https://user-images.githubusercontent.com/1731851/207563214-54d26c6e-3469-4991-90f9-9e7d51ddd3b7.png)
 
 
 ## ユーザー名・パスワード認証停止
