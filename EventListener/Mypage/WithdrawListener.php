@@ -53,8 +53,8 @@ class WithdrawListener implements EventSubscriberInterface
 
         /** @var Connection $connection */
         foreach ($Customer->getConnections() as $connection) {
-            $this->entityManager->remove($connection);
             $this->auth0->management()->users()->delete($connection->getUserId());
+            $this->entityManager->remove($connection);
         }
         $this->entityManager->flush();
     }
