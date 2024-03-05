@@ -12,6 +12,14 @@ Twitterは現在メールアドレスを提供していないので利用でき�
 非公式プラグインですのでご利用は自己責任でお願いいいたします。  
 本プラグインを導入したことによる不具合や被った不利益につきましては一切責任を負いません。
 
+## インストールに失敗する場合
+
+以下のコマンドをk実行してください。
+
+```
+composer config --no-plugins allow-plugins.php-http/discovery false
+```
+
 ## Auth0の設定例
 
 Application Login URI、Allowed Callback URLs、Allowed Logout URLsは任意のURLを設定してください。
