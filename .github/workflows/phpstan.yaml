@@ -23,6 +23,12 @@ jobs:
             php-versions: 8.0
 
     steps:
+      - name: Checkout EC-CUBE
+        uses: actions/checkout@v4
+        with:
+          repository: EC-CUBE/ec-cube
+          ref: ${{ matrix.eccube-versions }}
+
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@master #https://github.com/shivammathur/setup-php
         with:
@@ -30,24 +36,21 @@ jobs:
           extensions: mbstring, xml, ctype, iconv, mysql, intl, :xdebug
           tools: composer:v2
 
-      - name: Checkout EC-CUBE
-        uses: actions/checkout@v4
-        with:
-          repository: EC-CUBE/ec-cube
-          ref: ${{ matrix.eccube-versions }}
-          path: ${{ env.WORKING_DIRECTORY }}
-
-      - name: Initialize Composer
-        uses: ./.github/actions/composer
+      - name: composer install
+        run: |
+          composer install --dev --no-interaction -o --apcu-autoloader
+          composer config --no-plugins allow-plugins.php-http/discovery false
+          composer require knpuniversity/oauth2-client-bundle
+          composer require riskio/oauth2-auth0
+          composer require auth0/auth0-php
 
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: ${{ env.WORKING_DIRECTORY }}/app/Plugin/${{ env.PLUGIN_CODE }}
+          path: app/Plugin/${{ env.PLUGIN_CODE }}
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: PHPStan
-        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           composer require phpstan/phpstan --dev
           ./vendor/bin/phpstan analyze app/Plugin/${{ env.PLUGIN_CODE }} -c "app/Plugin/${{ env.PLUGIN_CODE }}/phpstan.neon" --error-format=github
