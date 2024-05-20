@@ -31,8 +31,6 @@ class ConfigController extends AbstractController
     protected ConfigRepository $configRepository;
 
     /**
-     * ConfigController constructor.
-     *
      * @param ConfigRepository $configRepository
      */
     public function __construct(ConfigRepository $configRepository)

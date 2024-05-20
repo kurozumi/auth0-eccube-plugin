@@ -40,6 +40,11 @@ class Auth0ControllerTest extends AbstractWebTestCase
             ->setClientSecret('aaa')
             ->setCustomDomain('aaa');
 
+        putenv('OAUTH_AUTH0_CLIENT_ID=aaa');
+        putenv('OAUTH_AUTH0_CLIENT_SECRET=aaa');
+        putenv('OAUTH_AUTH0_CUSTOM_DOMAIN=aaa');
+        putenv('OAUTH_AUTH0_COOKIE_SECRET=aaa');
+
         $this->client->request('GET', $this->generateUrl('auth0_connect'));
         self::assertTrue($this->client->getResponse()->isRedirect());
     }
