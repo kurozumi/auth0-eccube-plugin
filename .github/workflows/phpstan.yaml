@@ -3,6 +3,7 @@ on: [workflow_dispatch, pull_request]
 env:
   PLUGIN_CODE: Auth0
   PLUGIN_BRANCH: '4.2'
+  WORKING_DIRECTORY: 'ec-cube'
 jobs:
   phpstan:
     name: PHPStan
