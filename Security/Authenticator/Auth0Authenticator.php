@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -22,12 +22,13 @@ use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
@@ -36,36 +37,42 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
     /**
      * @var ClientRegistry
      */
-    private $clientRegistry;
+    private ClientRegistry $clientRegistry;
 
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     /**
      * @var RouterInterface
      */
-    private $router;
+    private RouterInterface $router;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private RequestStack $requestStack;
 
     public function __construct(
         ClientRegistry $clientRegistry,
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
         $this->router = $router;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    /**
+     * @param Request $request
+     * @param AuthenticationException|null $authException
+     *
+     * @return RedirectResponse
+     */
+    public function start(Request $request, ?AuthenticationException $authException = null): RedirectResponse
     {
         return new RedirectResponse(
             $this->router->generate('auth0_connect'),
@@ -73,16 +80,26 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return bool|null
+     */
     public function supports(Request $request): ?bool
     {
         return $request->attributes->get('_route') === 'auth0_connect_callback';
     }
 
-    public function authenticate(Request $request)
+    /**
+     * @param Request $request
+     *
+     * @return Passport
+     */
+    public function authenticate(Request $request): Passport
     {
         $client = $this->clientRegistry->getClient('auth0');
         $accessToken = $this->fetchAccessToken($client);
-        $this->session->set('access_token', $accessToken);
+        $this->requestStack->getSession()->set('access_token', $accessToken);
 
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
@@ -100,7 +117,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
                 if ($Connection) {
                     $Customer = $Connection->getCustomer();
                     // 本会員の場合、会員情報を返す
-                    if ($Customer->getStatus()->getId() === CustomerStatus::REGULAR) {
+                    if (CustomerStatus::REGULAR === $Customer->getStatus()->getId()) {
                         return $Customer;
                     } else {
                         throw new AuthenticationException();
@@ -128,6 +145,13 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
         );
     }
 
+    /**
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $firewallName
+     *
+     * @return Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $targetUrl = $this->router->generate('mypage');
@@ -135,6 +159,12 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
         return new RedirectResponse($targetUrl);
     }
 
+    /**
+     * @param Request $request
+     * @param AuthenticationException $exception
+     *
+     * @return Response|null
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         if ($exception instanceof FinishRegistrationException) {

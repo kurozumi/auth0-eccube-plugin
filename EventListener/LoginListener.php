@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -17,6 +17,7 @@ use Eccube\Entity\Customer;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
@@ -25,22 +26,25 @@ class LoginListener implements EventSubscriberInterface
     /**
      * @var ClientRegistry
      */
-    private $clientRegistry;
+    private ClientRegistry $clientRegistry;
 
     /**
      * @var SessionInterface
      */
-    private $session;
+    private SessionInterface $session;
 
     public function __construct(
-        ClientRegistry   $clientRegistry,
-        SessionInterface $session
-    )
-    {
+        ClientRegistry $clientRegistry,
+        RequestStack $requestStack
+    ) {
         $this->clientRegistry = $clientRegistry;
-        $this->session = $session;
+        $this->session = $requestStack->getSession();
     }
 
+    /**
+     * @param LoginSuccessEvent $event
+     * @return void
+     */
     public function onLoginSuccess(LoginSuccessEvent $event): void
     {
         $token = $event->getAuthenticatedToken();

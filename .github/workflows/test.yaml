@@ -2,7 +2,8 @@ name: CI/CD for EC-CUBE4 Plugin
 on: [ workflow_dispatch, pull_request ]
 env:
   PLUGIN_CODE: Auth0
-  PLUGIN_BRANCH: '4.2'
+  PACKAGE_NAME: 'ec-cube/auth0'
+  WORKING_DIRECTORY: 'ec-cube'
   APP_ENV: 'test'
   APP_DEBUG: 0
 jobs:
@@ -12,8 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        eccube-versions: [ '4.2' ]
-        php-versions: [ '7.4', '8.0', '8.1' ]
+        eccube-versions: [ '4.2', '4.3' ]
+        php-versions: [ '7.4', '8.0', '8.1', '8.2', '8.3' ]
         database: [ 'mysql', 'mysql8', 'pgsql' ]
         include:
           - database: mysql
@@ -28,6 +29,15 @@ jobs:
             database_url: postgres://postgres:password@127.0.0.1:5432/eccube_db
             database_server_version: 14
             database_charset: utf8
+        exclude:
+          - eccube-versions: 4.2
+            php-versions: 8.2
+          - eccube-versions: 4.2
+            php-versions: 8.3
+          - eccube-versions: 4.3
+            php-versions: 7.4
+          - eccube-versions: 4.3
+            php-versions: 8.0
 
     services:
       mysql:
@@ -55,46 +65,40 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Archive Plugin
+        run: |
+          tar cvzf ${GITHUB_WORKSPACE}/${{ env.PLUGIN_CODE }}.tar.gz ./*
+
+      - name: Setup mock-package-api
+        run: |
+          mkdir -p /tmp/repos
+          cp ${GITHUB_WORKSPACE}/${{ env.PLUGIN_CODE }}.tar.gz /tmp/repos/${{ env.PLUGIN_CODE }}.tgz
+          docker run --name package-api -d -v /tmp/repos:/repos -e MOCK_REPO_DIR=/repos -p 8080:8080 eccube/mock-package-api:composer2
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv, mysql, intl, :xdebug
+          tools: composer:v2
+
       - name: Checkout EC-CUBE
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: EC-CUBE/ec-cube
           ref: ${{ matrix.eccube-versions }}
+          path: ${{ env.WORKING_DIRECTORY }}
 
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@master #https://github.com/shivammathur/setup-php
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, ctype, iconv, mysql, intl
-          tools: composer:v2
-
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Cache composer dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          # Use composer.json for key, if composer.lock is not committed.
-          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
-
-      - name: Install Composer dependencies
-        run: |
-          composer install --no-progress --prefer-dist --optimize-autoloader
-          composer require knpuniversity/oauth2-client-bundle
-          composer require riskio/oauth2-auth0
-          composer require auth0/auth0-php
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          path: app/Plugin/${{ env.PLUGIN_CODE }}
-          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Initialize Composer
+        uses: ./.github/actions/composer
 
       - name: Setup EC-CUBE
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           bin/console doctrine:database:create
           bin/console doctrine:schema:create
@@ -107,8 +111,10 @@ jobs:
           DATABASE_CHARSET: ${{ matrix.database_charset }}
 
       - name: Setup Plugin
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
-          bin/console eccube:plugin:install --code ${{ env.PLUGIN_CODE }}
+          bin/console doctrine:query:sql "update dtb_base_info set authentication_key='dummy'"
+          bin/console eccube:composer:require ${{ env.PACKAGE_NAME }}
           bin/console cache:clear --no-warmup
           bin/console eccube:plugin:enable --code ${{ env.PLUGIN_CODE }}
           bin/console cache:clear --no-warmup
@@ -118,11 +124,14 @@ jobs:
           DATABASE_URL: ${{ matrix.database_url }}
           DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
           DATABASE_CHARSET: ${{ matrix.database_charset }}
+          ECCUBE_PACKAGE_API_URL: 'http://127.0.0.1:8080'
+          USE_SELFSIGNED_SSL_CERTIFICATE: '1'
 
-      - name: Run Tests
+      - name: Run PHPUnit
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           bin/console cache:clear --no-warmup
-          bin/phpunit -c app/Plugin/${{ env.PLUGIN_CODE }}/phpunit.xml.dist app/Plugin/${{ env.PLUGIN_CODE }}/Tests
+          ./vendor/bin/phpunit -c app/Plugin/${{ env.PLUGIN_CODE }}/phpunit.xml.dist app/Plugin/${{ env.PLUGIN_CODE }}/Tests
         env:
           APP_ENV: ${{ env.APP_ENV }}
           APP_DEBUG: ${{ env.APP_DEBUG }}
@@ -131,6 +140,7 @@ jobs:
           DATABASE_CHARSET: ${{ matrix.database_charset }}
 
       - name: Update Plugin
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           bin/console cache:clear --no-warmup
           bin/console eccube:plugin:update ${{ env.PLUGIN_CODE }}
@@ -142,6 +152,7 @@ jobs:
           DATABASE_CHARSET: ${{ matrix.database_charset }}
 
       - name: Uninstall Plugin
+        working-directory: ${{ env.WORKING_DIRECTORY }}
         run: |
           bin/console cache:clear --no-warmup
           bin/console eccube:plugin:uninstall --code=${{ env.PLUGIN_CODE }}

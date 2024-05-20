@@ -1,2 +1,3 @@
 *.tar.gz
 !.gitkeep
+.php-cs-fixer.cache

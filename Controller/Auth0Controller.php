@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,6 +16,7 @@ namespace Plugin\Auth0\Controller;
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Plugin\Auth0\Repository\ConfigRepository;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,17 +28,16 @@ class Auth0Controller extends AbstractController
     /**
      * @param ClientRegistry $clientRegistry
      * @param ConfigRepository $configRepository
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     *
+     * @return RedirectResponse
+     *
+     * @throws \Exception
      *
      * @Route("/connect", name="auth0_connect")
      */
-    public function connect(ClientRegistry $clientRegistry, ConfigRepository $configRepository)
+    public function connect(ClientRegistry $clientRegistry, ConfigRepository $configRepository): RedirectResponse
     {
         $Config = $configRepository->get();
-        if (!$Config) {
-            throw new NotFoundHttpException();
-        }
-
         if (!$Config->getClientId() || !$Config->getClientSecret() || !$Config->getCustomDomain()) {
             throw new NotFoundHttpException();
         }

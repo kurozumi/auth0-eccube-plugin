@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -29,7 +29,7 @@ class EntryTypeExtension extends AbstractTypeExtension
     /**
      * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function __construct(
         RequestStack $requestStack
@@ -37,9 +37,15 @@ class EntryTypeExtension extends AbstractTypeExtension
         $this->requestStack = $requestStack;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $userInfo = $this->getUserInfoFromSession($this->requestStack->getMasterRequest());
+        $userInfo = $this->getUserInfoFromSession($this->requestStack->getMainRequest());
         if ($userInfo) {
             $builder
                 ->add('email', RepeatedEmailType::class, [
@@ -56,18 +62,10 @@ class EntryTypeExtension extends AbstractTypeExtension
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getExtendedType()
-    {
-        return EntryType::class;
-    }
-
-    /**
      * @return iterable
      */
     public static function getExtendedTypes(): iterable
     {
-        return [EntryType::class];
+        yield EntryType::class;
     }
 }
