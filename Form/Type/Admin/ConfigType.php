@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,9 +24,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ConfigType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('client_id', TextType::class, [
@@ -51,9 +54,11 @@ class ConfigType extends AbstractType
     }
 
     /**
-     * {@inheritdoc}
+     * @param OptionsResolver $resolver
+     *
+     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Config::class,

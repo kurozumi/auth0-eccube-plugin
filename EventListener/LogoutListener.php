@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,19 +28,24 @@ class LogoutListener implements EventSubscriberInterface
     /**
      * @var Auth0
      */
-    private $auth0;
+    private Auth0 $auth0;
 
     /**
      * @var RouterInterface
      */
-    private $router;
+    private RouterInterface $router;
 
-    public function __construct(Auth0 $auth0, RouterInterface $router)
-    {
+    public function __construct(
+        Auth0 $auth0,
+        RouterInterface $router
+    ) {
         $this->auth0 = $auth0;
         $this->router = $router;
     }
 
+    /**
+     * @return array[]
+     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -48,6 +53,11 @@ class LogoutListener implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param LogoutEvent $event
+     * @return void
+     * @throws \Auth0\SDK\Exception\ConfigurationException
+     */
     public function onLogout(LogoutEvent $event): void
     {
         if (null === $event->getResponse()) {

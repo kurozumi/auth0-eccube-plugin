@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -20,6 +20,7 @@ use Eccube\Event\EventArgs;
 use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use Plugin\Auth0\Entity\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class EntryListener implements EventSubscriberInterface
@@ -29,32 +30,37 @@ class EntryListener implements EventSubscriberInterface
     /**
      * @var SessionInterface
      */
-    private $session;
+    private SessionInterface $session;
 
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(
-        SessionInterface $session,
+        RequestStack $requestStack,
         EntityManagerInterface $entityManager
     ) {
-        $this->session = $session;
+        $this->session = $requestStack->getSession();
         $this->entityManager = $entityManager;
     }
 
     /**
-     * {@inheritDoc}
+     * @return string[]
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             EccubeEvents::FRONT_ENTRY_INDEX_COMPLETE => 'onFrontEntryIndexComplete',
         ];
     }
 
-    public function onFrontEntryIndexComplete(EventArgs $args)
+    /**
+     * @param EventArgs $args
+     *
+     * @return void
+     */
+    public function onFrontEntryIndexComplete(EventArgs $args): void
     {
         $request = $args->getRequest();
         if (null === $request) {

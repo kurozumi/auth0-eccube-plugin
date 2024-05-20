@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,7 +26,7 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
      *
      * @return void
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
     }
 
@@ -35,7 +35,7 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
      *
      * @return void
      */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         // セキュリティ設定にAuth0Authenticator追加
         $extensionConfigsRefl = new \ReflectionProperty(ContainerBuilder::class, 'extensionConfigs');

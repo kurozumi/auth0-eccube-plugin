@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -26,12 +26,12 @@ class WithdrawListener implements EventSubscriberInterface
     /**
      * @var EntityManagerInterface
      */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
     /**
      * @var Auth0
      */
-    private $auth0;
+    private Auth0 $auth0;
 
     public function __construct(EntityManagerInterface $entityManager, Auth0 $auth0)
     {
@@ -39,14 +39,25 @@ class WithdrawListener implements EventSubscriberInterface
         $this->auth0 = $auth0;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedEvents(): array
     {
         return [
             EccubeEvents::FRONT_MYPAGE_WITHDRAW_INDEX_COMPLETE => 'onFrontMyPageWithdrawIndexComplete',
         ];
     }
 
-    public function onFrontMyPageWithdrawIndexComplete(EventArgs $args)
+    /**
+     * @param EventArgs $args
+     *
+     * @return void
+     *
+     * @throws \Auth0\SDK\Exception\ArgumentException
+     * @throws \Auth0\SDK\Exception\NetworkException
+     */
+    public function onFrontMyPageWithdrawIndexComplete(EventArgs $args): void
     {
         /** @var Customer $Customer */
         $Customer = $args->getArgument('Customer');

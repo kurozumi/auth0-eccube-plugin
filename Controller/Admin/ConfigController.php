@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -28,11 +28,9 @@ class ConfigController extends AbstractController
     /**
      * @var ConfigRepository
      */
-    protected $configRepository;
+    protected ConfigRepository $configRepository;
 
     /**
-     * ConfigController constructor.
-     *
      * @param ConfigRepository $configRepository
      */
     public function __construct(ConfigRepository $configRepository)
@@ -42,6 +40,7 @@ class ConfigController extends AbstractController
 
     /**
      * @Route("/%eccube_admin_route%/social_login/config", name="social_login_admin_config")
+     *
      * @Template("@Auth0/admin/config.twig")
      */
     public function index(Request $request, CacheUtil $cacheUtil)

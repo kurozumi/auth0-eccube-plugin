@@ -1,11 +1,11 @@
 <?php
 
-/**
- * This file is part of Auth0
+/*
+ * This file is part of Auth0 for EC-CUBE
  *
  * Copyright(c) Akira Kurozumi <info@a-zumi.net>
  *
- *  https://a-zumi.net
+ * https://a-zumi.net
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -18,9 +18,9 @@ use Eccube\Common\EccubeNav;
 class Nav implements EccubeNav
 {
     /**
-     * {@inheritDoc}
+     * @return array[]
      */
-    public static function getNav()
+    public static function getNav(): array
     {
         return [
             'customer' => [
