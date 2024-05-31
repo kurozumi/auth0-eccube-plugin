@@ -44,6 +44,7 @@ Auth0のClientIDとClientSecretを使用すれば、ソーシャルプロバイ�
 
 ### 設定例
 
+- [Googleアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/30)
 - [GitHubアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/22)
 - [LINEアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/24)
 - [Amazonアカウントの連携方法](https://github.com/kurozumi/auth0-eccube-plugin/issues/26)
