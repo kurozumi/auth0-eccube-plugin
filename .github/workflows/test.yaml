@@ -1,11 +1,10 @@
 name: CI/CD for EC-CUBE4 Plugin
 on: [ workflow_dispatch, pull_request ]
+
 env:
   PLUGIN_CODE: Auth0
-  PACKAGE_NAME: 'ec-cube/auth0'
-  WORKING_DIRECTORY: 'ec-cube'
-  APP_ENV: 'test'
-  APP_DEBUG: 0
+  PLUGIN_PACKAGE_NAME: 'ec-cube/auth0'
+
 jobs:
   phpunit:
     name: PHPUnit
@@ -70,95 +69,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Archive Plugin
-        run: |
-          tar cvzf ${GITHUB_WORKSPACE}/${{ env.PLUGIN_CODE }}.tar.gz ./*
-
-      - name: Setup mock-package-api
-        run: |
-          mkdir -p /tmp/repos
-          cp ${GITHUB_WORKSPACE}/${{ env.PLUGIN_CODE }}.tar.gz /tmp/repos/${{ env.PLUGIN_CODE }}.tgz
-          docker run --name package-api -d -v /tmp/repos:/repos -e MOCK_REPO_DIR=/repos -p 8080:8080 eccube/mock-package-api:composer2
-
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v2 #https://github.com/shivammathur/setup-php
+      - uses: kurozumi/eccube-plugin-phpstan@v1
         with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, xml, ctype, iconv, mysql, intl, :xdebug
-          tools: composer:v2
-
-      - name: Checkout EC-CUBE
-        uses: actions/checkout@v4
-        with:
-          repository: EC-CUBE/ec-cube
-          ref: ${{ matrix.eccube-versions }}
-          path: ${{ env.WORKING_DIRECTORY }}
-
-      - name: Initialize Composer
-        uses: ./.github/actions/composer
-
-      - name: Setup EC-CUBE
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          bin/console doctrine:database:create
-          bin/console doctrine:schema:create
-          bin/console eccube:fixtures:load
-        env:
-          APP_ENV: ${{ env.APP_ENV }}
-          APP_DEBUG: ${{ env.APP_DEBUG }}
-          DATABASE_URL: ${{ matrix.database_url }}
-          DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
-          DATABASE_CHARSET: ${{ matrix.database_charset }}
-
-      - name: Setup Plugin
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          bin/console doctrine:query:sql "update dtb_base_info set authentication_key='dummy'"
-          bin/console eccube:composer:require ${{ env.PACKAGE_NAME }}
-          bin/console cache:clear --no-warmup
-          bin/console eccube:plugin:enable --code ${{ env.PLUGIN_CODE }}
-          bin/console cache:clear --no-warmup
-        env:
-          APP_ENV: ${{ env.APP_ENV }}
-          APP_DEBUG: ${{ env.APP_DEBUG }}
-          DATABASE_URL: ${{ matrix.database_url }}
-          DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
-          DATABASE_CHARSET: ${{ matrix.database_charset }}
-          ECCUBE_PACKAGE_API_URL: 'http://127.0.0.1:8080'
-          USE_SELFSIGNED_SSL_CERTIFICATE: '1'
-
-      - name: Run PHPUnit
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          bin/console cache:clear --no-warmup
-          ./vendor/bin/phpunit -c app/Plugin/${{ env.PLUGIN_CODE }}/phpunit.xml.dist app/Plugin/${{ env.PLUGIN_CODE }}/Tests
-        env:
-          APP_ENV: ${{ env.APP_ENV }}
-          APP_DEBUG: ${{ env.APP_DEBUG }}
-          DATABASE_URL: ${{ matrix.database_url }}
-          DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
-          DATABASE_CHARSET: ${{ matrix.database_charset }}
-
-      - name: Update Plugin
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          bin/console cache:clear --no-warmup
-          bin/console eccube:plugin:update ${{ env.PLUGIN_CODE }}
-        env:
-          APP_ENV: ${{ env.APP_ENV }}
-          APP_DEBUG: ${{ env.APP_DEBUG }}
-          DATABASE_URL: ${{ matrix.database_url }}
-          DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
-          DATABASE_CHARSET: ${{ matrix.database_charset }}
-
-      - name: Uninstall Plugin
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: |
-          bin/console cache:clear --no-warmup
-          bin/console eccube:plugin:uninstall --code=${{ env.PLUGIN_CODE }}
-        env:
-          APP_ENV: ${{ env.APP_ENV }}
-          APP_DEBUG: ${{ env.APP_DEBUG }}
-          DATABASE_URL: ${{ matrix.database_url }}
-          DATABASE_SERVER_VERSION: ${{ matrix.database_server_version }}
-          DATABASE_CHARSET: ${{ matrix.database_charset }}
+          plugin-code: ${{ env.PLUGIN_CODE }}
+          plugin-package-name: ${{ env.PLUGIN_PACKAGE_NAME }}
+          eccube-versions: ${{ matrix.eccube-versions }}
+          php-versions: ${{ matrix.php-versions }}
+          database-url: ${{ matrix.database_url }}
+          database-server-version: ${{ matrix.database_server_version }}
+          database-charset: ${{ matrix.database_charset }}
