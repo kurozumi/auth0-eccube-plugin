@@ -20,6 +20,8 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class Auth0Extension extends Extension implements PrependExtensionInterface
 {
+    public const PLUGIN_NAME = 'Auth0';
+
     /**
      * @param array $configs
      * @param ContainerBuilder $container
@@ -37,6 +39,11 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
      */
     public function prepend(ContainerBuilder $container): void
     {
+        $enabledPlugins = $container->getParameter('eccube.plugins.enabled');
+        if (!in_array(static::PLUGIN_NAME, $enabledPlugins, true)) {
+            return;
+        }
+
         // セキュリティ設定にAuth0Authenticator追加
         $extensionConfigsRefl = new \ReflectionProperty(ContainerBuilder::class, 'extensionConfigs');
         $extensionConfigsRefl->setAccessible(true);
