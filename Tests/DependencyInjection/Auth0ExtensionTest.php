@@ -2,11 +2,11 @@
 
 namespace Plugin\Auth0\Tests\DependencyInjection;
 
-use Eccube\Tests\EccubeTestCase;
 use Plugin\Auth0\DependencyInjection\Auth0Extension;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class Auth0ExtensionTest extends EccubeTestCase
+class Auth0ExtensionTest extends KernelTestCase
 {
     public function testプラグインが無効化されていたらAuth0Authenticatorは追加されない()
     {
