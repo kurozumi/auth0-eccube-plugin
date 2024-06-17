@@ -11,5 +11,10 @@
     },
     "extra": {
         "code": "Auth0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": false
+        }
     }
 }

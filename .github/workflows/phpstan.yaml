@@ -44,3 +44,4 @@ jobs:
           database-url: ${{ matrix.database_url }}
           database-server-version: ${{ matrix.database_server_version }}
           database-charset: ${{ matrix.database_charset }}
+          composer-command: 'composer config --no-plugins allow-plugins.php-http/discovery false'
