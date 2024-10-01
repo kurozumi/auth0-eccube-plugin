@@ -53,6 +53,6 @@ class Auth0ControllerTest extends AbstractWebTestCase
     public function testUserInfoがない場合メールアドレス認証案内ページにアクセスできない()
     {
         $this->client->request('GET', $this->generateUrl('auth0_connect_email_verified'));
-        self::expectException(BadRequestHttpException::class);
+        self::assertTrue($this->client->getResponse()->isClientError());
     }
 }
