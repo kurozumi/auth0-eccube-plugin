@@ -20,6 +20,7 @@ use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\Auth0\Entity\Connection;
+use Plugin\Auth0\Security\Exception\EmailVerifiedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -104,14 +105,15 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
         return new SelfValidatingPassport(
             new UserBadge($accessToken->getToken(), function () use ($accessToken, $client) {
                 $user = $client->fetchUserFromToken($accessToken);
+                $user = $user->toArray();
 
-                if (!$user->toArray()['email_verified']) {
-                    throw new AuthenticationException();
+                if (!$user['email_verified']) {
+                    throw new EmailVerifiedException($user);
                 }
 
                 /** @var Connection $Connection */
                 $Connection = $this->entityManager->getRepository(Connection::class)
-                    ->findOneBy(['user_id' => $user->toArray()['sub']]);
+                    ->findOneBy(['user_id' => $user['sub']]);
 
                 // 連携済みの場合
                 if ($Connection) {
@@ -126,16 +128,16 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
 
                 /** @var Customer $Customer */
                 $Customer = $this->entityManager->getRepository(Customer::class)
-                    ->findOneBy(['email' => $user->getEmail()]);
+                    ->findOneBy(['email' => $user['email']]);
 
                 // 会員登録していない場合、会員登録ページへ
                 if (null === $Customer) {
-                    throw new FinishRegistrationException($user->toArray());
+                    throw new FinishRegistrationException($user);
                 }
 
                 // 会員登録済みの場合はユーザー識別子を保存
                 $Connection = new Connection();
-                $Connection->setUserId($user->toArray()['sub']);
+                $Connection->setUserId($user['sub']);
                 $Connection->setCustomer($Customer);
                 $this->entityManager->persist($Connection);
                 $this->entityManager->flush();
@@ -167,14 +169,20 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
+        if ($exception instanceof EmailVerifiedException) {
+            $this->saveUserInfoToSession($request, $exception);
+
+            return new RedirectResponse($this->router->generate('auth0_connect_email_verified'));
+        }
+
         if ($exception instanceof FinishRegistrationException) {
             $this->saveUserInfoToSession($request, $exception);
 
             return new RedirectResponse($this->router->generate('entry'));
-        } else {
-            $this->saveAuthenticationErrorToSession($request, $exception);
-
-            return new RedirectResponse($this->router->generate('mypage_login'));
         }
+
+        $this->saveAuthenticationErrorToSession($request, $exception);
+
+        return new RedirectResponse($this->router->generate('mypage_login'));
     }
 }

@@ -15,8 +15,12 @@ namespace Plugin\Auth0\Controller;
 
 use Eccube\Controller\AbstractController;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
+use KnpU\OAuth2ClientBundle\Security\Helper\FinishRegistrationBehavior;
 use Plugin\Auth0\Repository\ConfigRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,6 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class Auth0Controller extends AbstractController
 {
+    use FinishRegistrationBehavior;
+
     /**
      * @param ClientRegistry $clientRegistry
      * @param ConfigRepository $configRepository
@@ -54,5 +60,21 @@ class Auth0Controller extends AbstractController
      */
     public function callback()
     {
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     *
+     * @Route("/connect/email_veridied", name="auth0_connect_email_verified")
+     */
+    public function emailVerified(Request $request): Response
+    {
+        $userInfo = $this->getUserInfoFromSession($request);
+        if (!$userInfo) {
+            throw new BadRequestHttpException();
+        }
+
+        return new Response(trans('plugin.social_login.front.email_verified'));
     }
 }
