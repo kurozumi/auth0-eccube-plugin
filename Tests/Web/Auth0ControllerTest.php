@@ -15,6 +15,7 @@ namespace Plugin\Auth0\Tests\Web;
 
 use Eccube\Tests\Web\AbstractWebTestCase;
 use Plugin\Auth0\Entity\Config;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class Auth0ControllerTest extends AbstractWebTestCase
 {
@@ -47,5 +48,11 @@ class Auth0ControllerTest extends AbstractWebTestCase
 
         $this->client->request('GET', $this->generateUrl('auth0_connect'));
         self::assertTrue($this->client->getResponse()->isRedirect());
+    }
+
+    public function testUserInfoがない場合メールアドレス認証案内ページにアクセスできない()
+    {
+        $this->client->request('GET', $this->generateUrl('auth0_connect_email_verified'));
+        self::assertTrue($this->client->getResponse()->isClientError());
     }
 }

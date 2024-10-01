@@ -26,7 +26,7 @@ class Nav implements EccubeNav
             'customer' => [
                 'children' => [
                     'auth0_config' => [
-                        'name' => 'plguin.social_login.admin.setting.title',
+                        'name' => 'plugin.social_login.admin.setting.title',
                         'url' => 'social_login_admin_config',
                     ],
                 ],

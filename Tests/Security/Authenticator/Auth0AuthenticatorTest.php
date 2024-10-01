@@ -16,6 +16,7 @@ namespace Plugin\Auth0\Tests\Security\Authenticator;
 use Eccube\Tests\EccubeTestCase;
 use KnpU\OAuth2ClientBundle\Security\Exception\FinishRegistrationException;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
+use Plugin\Auth0\Security\Exception\EmailVerifiedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -60,6 +61,15 @@ class Auth0AuthenticatorTest extends EccubeTestCase
     {
         $response = $this->authenticator->start(new Request());
         self::assertTrue($response->isRedirect($this->router->generate('auth0_connect')));
+    }
+
+    public function testOnAuthenticationFailureEmailVerifiedException()
+    {
+        $request = new Request();
+        $request->setSession(new Session(new MockArraySessionStorage()));
+
+        $response = $this->authenticator->onAuthenticationFailure($request, new EmailVerifiedException([]));
+        self::assertTrue($response->isRedirect($this->router->generate('auth0_connect_email_verified')));
     }
 
     public function testOnAuthenticationFailureFinishRegistrationException()
