@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -45,7 +44,7 @@ class Auth0Controller extends AbstractController
     {
         $Config = $configRepository->get();
         if (!$Config->getClientId() || !$Config->getClientSecret() || !$Config->getCustomDomain()) {
-            throw new NotFoundHttpException();
+            throw new BadRequestHttpException();
         }
 
         return $clientRegistry
@@ -64,6 +63,7 @@ class Auth0Controller extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return Response
      *
      * @Route("/connect/email_veridied", name="auth0_connect_email_verified")

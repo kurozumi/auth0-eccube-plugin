@@ -29,7 +29,7 @@ class Auth0ControllerTest extends AbstractWebTestCase
             ->setCustomDomain(null);
 
         $this->client->request('GET', $this->generateUrl('auth0_connect'));
-        self::assertTrue($this->client->getResponse()->isNotFound());
+        self::assertTrue($this->client->getResponse()->isClientError());
     }
 
     public function testAuth0の設定をしていたらリダイレクト()
