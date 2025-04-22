@@ -73,4 +73,4 @@ jobs:
         with:
           plugin-code: ${{ env.PLUGIN_CODE }}
           plugin-package-name: ${{ env.PLUGIN_PACKAGE_NAME }}
-          command: 'composer config --no-plugins allow-plugins.php-http/discovery false'
+          pre-composer-install: 'composer config --no-plugins allow-plugins.php-http/discovery false'
