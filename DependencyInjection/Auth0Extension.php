@@ -13,6 +13,10 @@
 
 namespace Plugin\Auth0\DependencyInjection;
 
+use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Configuration;
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
 use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -20,7 +24,7 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 class Auth0Extension extends Extension implements PrependExtensionInterface
 {
-    public const PLUGIN_NAME = 'Auth0';
+    public const PLUGIN_CODE = 'Auth0';
 
     /**
      * @param array $configs
@@ -36,11 +40,17 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
      * @param ContainerBuilder $container
      *
      * @return void
+     *
+     * @throws Exception
      */
     public function prepend(ContainerBuilder $container): void
     {
-        $enabledPlugins = $container->getParameter('eccube.plugins.enabled');
-        if (!in_array(static::PLUGIN_NAME, $enabledPlugins, true)) {
+        $conn = $this->getConnection($container);
+        if (false === $this->isConnected($conn)) {
+            return;
+        }
+
+        if (false === $this->isPluginEnabled($conn)) {
             return;
         }
 
@@ -57,5 +67,75 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
         }
 
         $extensionConfigsRefl->setValue($container, $extensionConfigs);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     *
+     * @return Connection
+     *
+     * @throws Exception
+     */
+    protected function getConnection(ContainerBuilder $container): Connection
+    {
+        // doctrine.yml, または他のprependで差し込まれたdoctrineの設定値を取得する.
+        $configs = $container->getExtensionConfig('doctrine');
+
+        // $configsは, env変数(%env(xxx)%)やパラメータ変数(%xxx.xxx%)がまだ解決されていないため, resolveEnvPlaceholders()で解決する
+        // @see https://github.com/symfony/symfony/issues/22456
+        $configs = $container->resolveEnvPlaceholders($configs, true);
+
+        // doctrine bundleのconfigurationで設定値を正規化する.
+        $configuration = new Configuration($container->getParameter('kernel.debug'));
+        $config = $this->processConfiguration($configuration, $configs);
+
+        // prependのタイミングではコンテナのインスタンスは利用できない.
+        // 直接dbalのconnectionを生成し, dbアクセスを行う.
+        $params = $config['dbal']['connections'][$config['dbal']['default_connection']];
+        // ContainerInterface::resolveEnvPlaceholders() で取得した DATABASE_URL は
+        // % がエスケープされているため、環境変数から取得し直す
+        $params['url'] = env('DATABASE_URL');
+
+        return DriverManager::getConnection($params);
+    }
+
+    /**
+     * @param Connection $conn
+     *
+     * @return bool
+     */
+    protected function isConnected(Connection $conn): bool
+    {
+        try {
+            if (!$conn->executeQuery('select 1')) {
+                return false;
+            }
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        try {
+            $tableNames = $conn->createSchemaManager()->listTableNames();
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return in_array('dtb_plugin', $tableNames, true);
+    }
+
+    /**
+     * プラグインが有効化されているかチェック
+     *
+     * @param Connection $conn
+     *
+     * @return bool
+     *
+     * @throws Exception
+     */
+    protected function isPluginEnabled(Connection $conn): bool
+    {
+        $stmt = $conn->executeQuery('select count(*) from dtb_plugin where code = ? and enabled = ?', [self::PLUGIN_CODE, 1]);
+
+        return $stmt->fetchOne() > 0;
     }
 }
