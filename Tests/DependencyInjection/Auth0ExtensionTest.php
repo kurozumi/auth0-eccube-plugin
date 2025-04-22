@@ -11,9 +11,7 @@ class Auth0ExtensionTest extends KernelTestCase
     public function testプラグインが無効化されていたらAuth0Authenticatorは追加されない()
     {
         $container = $this->createMock(ContainerBuilder::class);
-        $container->expects($this->once())
-            ->method('getParameter')
-            ->willReturn([]);
+        $container->expects($this->once());
 
         $extension = new Auth0Extension();
         $extension->prepend($container);
