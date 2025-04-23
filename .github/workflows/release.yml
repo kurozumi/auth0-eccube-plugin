@@ -17,7 +17,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ runner.workspace }}/${{ env.PLUGIN_CODE }}-${{ github.event.release.tag_name }}.tar.gz
-          asset_name: ${{ env.PLUGIN_CODE }}-${{ github.event.release.tag_name }}.tar.gz
+          file: ${{ runner.workspace }}/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tar.gz
+          asset_name: ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tar.gz
           tag: ${{ github.ref }}
           overwrite: true
