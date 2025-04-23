@@ -17,6 +17,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Plugin\Auth0\DependencyInjection\Auth0Extension;
+use Plugin\Auth0\Security\Authenticator\Auth0Authenticator;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -113,5 +114,44 @@ class Auth0ExtensionTest extends KernelTestCase
         $method->setAccessible(true);
 
         return $method->invokeArgs($object, $args);
+    }
+
+    public function testPrependModifiesSecurityConfig()
+    {
+        $extension = $this->getMockBuilder(Auth0Extension::class)
+            ->onlyMethods(['getConnection', 'isConnected', 'isPluginEnabled'])
+            ->getMock();
+
+        $mockCon = $this->createMock(Connection::class);
+        $extension->method('getConnection')->willReturn($mockCon);
+        $extension->method('isConnected')->willReturn(true);
+        $extension->method('isPluginEnabled')->willReturn(true);
+
+        $container = $this->getMockBuilder(ContainerBuilder::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $extensionConfigs = [
+            'security' => [
+                [
+                    'firewalls' => [
+                        'customer' => [
+                            'entry_point' => '',
+                            'custom_authenticators' => [],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $reflection = new \ReflectionProperty(ContainerBuilder::class, 'extensionConfigs');
+        $reflection->setAccessible(true);
+        $reflection->setValue($container, $extensionConfigs);
+
+        $extension->prepend($container);
+
+        $modifiedConfig = $reflection->getValue($container);
+        $this->assertEquals(Auth0Authenticator::class, $modifiedConfig['security'][0]['firewalls']['customer']['entry_point']);
+        $this->assertEquals(Auth0Authenticator::class, $modifiedConfig['security'][0]['firewalls']['customer']['custom_authenticators'][0]);
     }
 }
