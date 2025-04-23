@@ -107,14 +107,6 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
     protected function isConnected(Connection $conn): bool
     {
         try {
-            if (!$conn->executeQuery('select 1')) {
-                return false;
-            }
-        } catch (\Exception $e) {
-            return false;
-        }
-
-        try {
             $tableNames = $conn->createSchemaManager()->listTableNames();
         } catch (\Exception $e) {
             return false;
@@ -124,8 +116,6 @@ class Auth0Extension extends Extension implements PrependExtensionInterface
     }
 
     /**
-     * プラグインが有効化されているかチェック
-     *
      * @param Connection $conn
      *
      * @return bool
