@@ -31,9 +31,8 @@ class EntryTypeExtension extends AbstractTypeExtension
      */
     private RequestStack $requestStack;
 
-    public function __construct(
-        RequestStack $requestStack
-    ) {
+    public function __construct(RequestStack $requestStack)
+    {
         $this->requestStack = $requestStack;
     }
 
