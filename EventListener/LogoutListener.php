@@ -35,10 +35,8 @@ class LogoutListener implements EventSubscriberInterface
      */
     private RouterInterface $router;
 
-    public function __construct(
-        Auth0 $auth0,
-        RouterInterface $router
-    ) {
+    public function __construct(Auth0 $auth0, RouterInterface $router)
+    {
         $this->auth0 = $auth0;
         $this->router = $router;
     }
@@ -55,7 +53,9 @@ class LogoutListener implements EventSubscriberInterface
 
     /**
      * @param LogoutEvent $event
+     *
      * @return void
+     *
      * @throws \Auth0\SDK\Exception\ConfigurationException
      */
     public function onLogout(LogoutEvent $event): void

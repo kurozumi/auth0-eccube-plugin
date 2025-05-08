@@ -14,6 +14,8 @@
 namespace Plugin\Auth0\EventListener\Mypage;
 
 use Auth0\SDK\Auth0;
+use Auth0\SDK\Exception\ArgumentException;
+use Auth0\SDK\Exception\NetworkException;
 use Doctrine\ORM\EntityManagerInterface;
 use Eccube\Entity\Customer;
 use Eccube\Event\EccubeEvents;
@@ -54,8 +56,8 @@ class WithdrawListener implements EventSubscriberInterface
      *
      * @return void
      *
-     * @throws \Auth0\SDK\Exception\ArgumentException
-     * @throws \Auth0\SDK\Exception\NetworkException
+     * @throws ArgumentException
+     * @throws NetworkException
      */
     public function onFrontMyPageWithdrawIndexComplete(EventArgs $args): void
     {

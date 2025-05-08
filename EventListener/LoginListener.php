@@ -33,16 +33,15 @@ class LoginListener implements EventSubscriberInterface
      */
     private SessionInterface $session;
 
-    public function __construct(
-        ClientRegistry $clientRegistry,
-        RequestStack $requestStack
-    ) {
+    public function __construct(ClientRegistry $clientRegistry, RequestStack $requestStack)
+    {
         $this->clientRegistry = $clientRegistry;
         $this->session = $requestStack->getSession();
     }
 
     /**
      * @param LoginSuccessEvent $event
+     *
      * @return void
      */
     public function onLoginSuccess(LoginSuccessEvent $event): void

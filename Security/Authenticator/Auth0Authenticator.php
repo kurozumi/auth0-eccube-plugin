@@ -55,12 +55,8 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
      */
     private RequestStack $requestStack;
 
-    public function __construct(
-        ClientRegistry $clientRegistry,
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        RequestStack $requestStack
-    ) {
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $entityManager, RouterInterface $router, RequestStack $requestStack)
+    {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
         $this->router = $router;

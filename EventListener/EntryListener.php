@@ -37,10 +37,8 @@ class EntryListener implements EventSubscriberInterface
      */
     private EntityManagerInterface $entityManager;
 
-    public function __construct(
-        RequestStack $requestStack,
-        EntityManagerInterface $entityManager
-    ) {
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $entityManager)
+    {
         $this->session = $requestStack->getSession();
         $this->entityManager = $entityManager;
     }

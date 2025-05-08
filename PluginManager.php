@@ -25,7 +25,9 @@ class PluginManager extends AbstractPluginManager
     /**
      * @param array $meta
      * @param ContainerInterface $container
+     *
      * @return void
+     *
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */

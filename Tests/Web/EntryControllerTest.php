@@ -15,5 +15,4 @@ namespace Plugin\Auth0\Tests\Web;
 
 class EntryControllerTest extends \Eccube\Tests\Web\EntryControllerTest
 {
-
 }

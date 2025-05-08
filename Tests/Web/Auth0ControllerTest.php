@@ -15,7 +15,6 @@ namespace Plugin\Auth0\Tests\Web;
 
 use Eccube\Tests\Web\AbstractWebTestCase;
 use Plugin\Auth0\Entity\Config;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class Auth0ControllerTest extends AbstractWebTestCase
 {
