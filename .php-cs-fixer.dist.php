@@ -41,11 +41,9 @@ $rules = [
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->name('*.php')
-;
+    ->name('*.php');
 $config = new PhpCsFixer\Config();
 
 return $config
     ->setRules($rules)
-    ->setFinder($finder)
-;
+    ->setFinder($finder);

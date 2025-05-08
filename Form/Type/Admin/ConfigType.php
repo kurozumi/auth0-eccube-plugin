@@ -49,8 +49,7 @@ class ConfigType extends AbstractType
                     new NotBlank(),
                     new Length(['max' => 255]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

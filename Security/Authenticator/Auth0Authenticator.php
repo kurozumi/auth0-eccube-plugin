@@ -59,7 +59,7 @@ class Auth0Authenticator extends OAuth2Authenticator implements AuthenticationEn
         ClientRegistry $clientRegistry,
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        RequestStack $requestStack
+        RequestStack $requestStack,
     ) {
         $this->clientRegistry = $clientRegistry;
         $this->entityManager = $entityManager;
